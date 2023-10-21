@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 
-
 class ParentSignUp : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {

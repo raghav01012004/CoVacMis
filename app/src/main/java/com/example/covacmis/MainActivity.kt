@@ -22,13 +22,17 @@ class MainActivity : AppCompatActivity() {
 
 
         button.setOnClickListener {
-            val uname = username.getText()
-            val pass = password.getText()
+            val uname = username.text
+            val pass = password.text
 
             if(uname.toString() == "" || pass.toString() == "")
             {
                 Toast.makeText(applicationContext, "Please fill the above fields", Toast.LENGTH_SHORT).show()
             }
+            else{
+                startActivity(Intent(applicationContext,VaccinationChart::class.java))
+            }
+
 
         }
         textView.setOnClickListener {
