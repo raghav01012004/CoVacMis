@@ -24,7 +24,7 @@ class MainActivity2 : AppCompatActivity() {
         button.setOnClickListener {
             imageview1.animate().apply {
                 duration = 1000
-                rotationYBy(180f)
+                rotationYBy(360f)
             }.start()
             Handler(Looper.getMainLooper()).postDelayed({
                 intent = Intent(applicationContext,ParentSignUp::class.java)
@@ -34,7 +34,7 @@ class MainActivity2 : AppCompatActivity() {
         button2.setOnClickListener {
             imageview2.animate().apply {
                 duration = 1000
-                rotationYBy(180f)
+                rotationYBy(360f)
             }.start()
             Handler(Looper.getMainLooper()).postDelayed({
                 intent = Intent(applicationContext,HospitalSignUp::class.java)

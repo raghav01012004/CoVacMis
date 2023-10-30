@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "736601563103",
+    "project_id": "otpcovac",
+    "storage_bucket": "otpcovac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:736601563103:android:78ea43ccaddfdda6ee6e6a",
+        "android_client_info": {
+          "package_name": "com.example.covacmis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1vAFYGcLzySyxRPQJ4w4DdAzxtAgl2Oo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

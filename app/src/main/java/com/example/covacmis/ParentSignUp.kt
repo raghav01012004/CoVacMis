@@ -1,6 +1,7 @@
 package com.example.covacmis
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -87,6 +88,8 @@ class ParentSignUp : AppCompatActivity() {
             Toast.makeText(applicationContext,"Registering As : ${radioUser.text}",
                 Toast.LENGTH_SHORT).show()
             Toast.makeText(this, "${radioGender.text}", Toast.LENGTH_SHORT).show()
+            intent = Intent(applicationContext,OtpVerification::class.java)
+            startActivity(intent)
         }
     }
     fun ageCalc(sy: Int,sm: Int,cy: Int,cm: Int) :Int{
