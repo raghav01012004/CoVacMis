@@ -19,7 +19,9 @@
 
         <TextView
             android:id="@+id/VaccineName"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:layout_marginVertical="20dp"
