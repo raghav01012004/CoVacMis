@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CoVacMis</string>
     <string name="date_of_birth_dd_mm_yyyy">D.O.B(DD/MM/YYYY)</string>
-    <string name="sign_up"><u>SIGN UP</u></string>
+    <string name="sign_up">SIGN UP</string>
     <string name="as_individual">As Individual</string>
     <string name="as_parent">As Parent</string>
     <string name="full_name">Full Name</string>
@@ -11,4 +11,6 @@
     <string name="others">Others</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
+    <string name="healthcare_ins_name">HealthCare Ins. Name</string>
+    <string name="log_in">LOG IN</string>
 </resources>

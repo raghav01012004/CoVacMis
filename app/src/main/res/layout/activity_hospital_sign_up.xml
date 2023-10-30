@@ -14,8 +14,10 @@
         android:layout_height="380dp"
         android:layout_marginTop="64dp"
         android:background="#B26B6B"
-        app:cardBackgroundColor="#F3C5D4"
+        app:cardBackgroundColor="#A6F2B8FF"
         app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6">
@@ -37,6 +39,8 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="60dp"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
             app:startIconDrawable="@drawable/baseline_local_hospital_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -44,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="HealthCare Ins. Name"
+                android:hint="@string/healthcare_ins_name"
                 android:inputType="text"
                 android:text=""
                 android:textColor="#AF32C4"
@@ -59,6 +63,8 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="120dp"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
             app:startIconDrawable="@drawable/baseline_numbers_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -75,6 +81,55 @@
                 android:textStyle="bold"  />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="281dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="180dp"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
+            app:startIconDrawable="@drawable/baseline_local_phone_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextText3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="Phone No."
+                android:inputType="phone"
+                android:text=""
+                android:textColor="#AF32C4"
+                android:textColorHint="#B276BD"
+                android:textSize="20sp"
+                android:textStyle="bold"  />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="281dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="240dp"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
+            app:startIconDrawable="@drawable/baseline_lock_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextText4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="text"
+                android:text=""
+                android:textColor="#AF32C4"
+                android:textColorHint="#B276BD"
+                android:textSize="20sp"
+                android:textStyle="bold"  />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
     </androidx.cardview.widget.CardView>
 
