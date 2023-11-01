@@ -4,17 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.json.JSONArray
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-
 
 class ParentSignUp : AppCompatActivity() {
     @SuppressLint("MissingInflatedId", "SimpleDateFormat")
@@ -30,6 +35,7 @@ class ParentSignUp : AppCompatActivity() {
         val pass = findViewById<EditText>(R.id.editText5)
         val mobile = findViewById<EditText>(R.id.editText6)
         val dob = findViewById<EditText>(R.id.editText7)
+        val vaccines : MutableList<String> = mutableListOf()
 
         // Here are present day, month & year
         val calender = Calendar.getInstance()
@@ -88,8 +94,48 @@ class ParentSignUp : AppCompatActivity() {
             Toast.makeText(applicationContext,"Registering As : ${radioUser.text}",
                 Toast.LENGTH_SHORT).show()
             Toast.makeText(this, "${radioGender.text}", Toast.LENGTH_SHORT).show()
-            intent = Intent(applicationContext,OtpVerification::class.java)
-            startActivity(intent)
+
+
+            val user = User(
+                fullname = name.text.toString(),
+                username = uname.text.toString(),
+                dob = dob.text.toString(),
+                password = pass.text.toString(),
+                gender = radioGender.text.toString(),
+                mobile_no = mobile.text.toString(),
+                vaccines = vaccines
+            )
+
+            val requestBody = JSONObject().apply {
+                put("fullname", user.fullname)
+                put("username", user.username)
+                put("dob", user.dob)
+                put("password", user.password)
+                put("gender", user.gender)
+                put("mobile_no", user.mobile_no)
+                put("vaccines",JSONArray(user.vaccines))
+            }
+            println(requestBody)
+
+            val url = "http://10.0.2.2:8000/create" // Replace with your endpoint URL
+
+            val request = JsonObjectRequest(
+                Request.Method.POST, url, requestBody,
+                { response ->
+                    if(response!=null){
+                        Toast.makeText(applicationContext,"Welcome ${user.fullname} to CoVacMis...",Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(applicationContext,VaccinationChart::class.java))
+                    }
+
+                },
+                { error ->
+                    Log.d("ParentSignUp",error.toString())
+                })
+
+// Add the request to the RequestQueue
+            val queue = Volley.newRequestQueue(this)
+            queue.add(request)
+
         }
     }
     fun ageCalc(sy: Int,sm: Int,cy: Int,cm: Int) :Int{
