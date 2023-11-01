@@ -1,5 +1,6 @@
 package com.example.covacmis
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -12,14 +13,14 @@ class HospitalSignUp : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hospital_sign_up)
 
-//        val button = findViewById<Button>(R.id.button4)
-//        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
-//        val radio = findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
-//
-//        button.setOnClickListener {
-//            Toast.makeText(applicationContext,"On click : ${radio.text}",
-//                Toast.LENGTH_SHORT).show()
-//        }
+        val button = findViewById<Button>(R.id.button5)
+
+        button.setOnClickListener {
+            Toast.makeText(applicationContext,"Suiiii",
+                Toast.LENGTH_SHORT).show()
+            intent = Intent(applicationContext,OtpVerification::class.java)
+            startActivity(intent)
+        }
 
     }
 }

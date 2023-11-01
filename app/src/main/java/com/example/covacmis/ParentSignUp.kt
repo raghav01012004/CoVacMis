@@ -95,6 +95,7 @@ class ParentSignUp : AppCompatActivity() {
                 Toast.LENGTH_SHORT).show()
             Toast.makeText(this, "${radioGender.text}", Toast.LENGTH_SHORT).show()
 
+
             val user = User(
                 fullname = name.text.toString(),
                 username = uname.text.toString(),

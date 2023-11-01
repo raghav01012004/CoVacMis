@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradientwp"
+    android:background="@drawable/gradwp"
     tools:context=".ParentSignUp">
 
     <RadioGroup
@@ -13,7 +13,7 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/gradwp3"
+        android:background="#8CEFBDF6"
         android:maxWidth="311dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
             android:layout_height="47dp"
             android:gravity="center"
             android:text="@string/as_individual"
-            android:textColor="@color/white"
+            android:textColor="#A600C2"
             android:textSize="19sp"
             android:textStyle="bold|italic" />
 
@@ -38,7 +38,7 @@
             android:checked="true"
             android:gravity="center"
             android:text="@string/as_parent"
-            android:textColor="@color/white"
+            android:textColor="#A600C2"
             android:textSize="20sp"
             android:textStyle="bold|italic" />
     </RadioGroup>
@@ -48,7 +48,8 @@
         android:layout_width="140dp"
         android:layout_height="48dp"
         android:text="@string/sign_up"
-        app:backgroundTint="#0A6D9D"
+        app:backgroundTint="#E58FEB"
+        android:textColor="#040303"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -71,8 +72,9 @@
         android:layout_height="380dp"
         android:layout_marginTop="70dp"
         android:background="#B26B6B"
-        app:cardBackgroundColor="#660C0027"
+        app:cardBackgroundColor="#A6F2B8FF"
         app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5">
@@ -84,8 +86,8 @@
             android:layout_marginTop="0dp"
             android:gravity="center"
             android:text="@string/sign_up"
-            android:textColor="#D897E2"
-            android:textSize="26sp"
+            android:textColor="#A600C2"
+            android:textSize="24sp"
             android:textStyle="bold|italic" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -93,9 +95,8 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="42dp"
-            android:textColorHighlight="#D897E2"
-            android:textColorHint="#DDB3C1"
-            app:startIconTint="@color/white"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
             app:startIconDrawable="@drawable/baseline_assignment_ind_24">
 
 
@@ -108,9 +109,8 @@
                 android:gravity="center"
                 android:hint="@string/full_name"
                 android:inputType="text"
-                android:textColor="#0CA3E8"
-                android:textColorHighlight="#D897E2"
-                android:textColorHint="#D897E2"
+                android:textColor="#AF32C4"
+                android:textColorHint="#B276BD"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -121,8 +121,8 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="100dp"
-            android:textColorHint="#DDB3C1"
-            app:startIconTint="@color/white"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
             app:startIconDrawable="@drawable/baseline_person_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -148,8 +148,8 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="160dp"
-            android:textColorHint="#DDB3C1"
-            app:startIconTint="@color/white"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
             app:startIconDrawable="@drawable/baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -175,8 +175,8 @@
             android:layout_height="60dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="220dp"
-            android:textColorHint="#DDB3C1"
-            app:startIconTint="@color/white"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
             app:startIconDrawable="@drawable/baseline_local_phone_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -201,7 +201,8 @@
             android:layout_height="58dp"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="280dp"
-            android:textColorHint="#DDB3C1">
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText7"
@@ -241,7 +242,7 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="8dp"
-        android:background="@drawable/gradwp3"
+        android:background="#8CEFBDF6"
         android:maxWidth="311dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -254,7 +255,7 @@
             android:layout_height="47dp"
             android:checked="true"
             android:text="@string/male"
-            android:textColor="@color/white"
+            android:textColor="#A600C2"
             android:textSize="20sp"
             android:textStyle="bold|italic" />
 
@@ -264,7 +265,7 @@
             android:layout_height="47dp"
             android:checked="true"
             android:text="@string/female"
-            android:textColor="@color/white"
+            android:textColor="#A600C2"
             android:textSize="20sp"
             android:textStyle="bold|italic" />
 
@@ -273,7 +274,7 @@
             android:layout_width="119dp"
             android:layout_height="47dp"
             android:text="@string/others"
-            android:textColor="@color/white"
+            android:textColor="#A600C2"
             android:textSize="20sp"
             android:textStyle="bold|italic" />
     </RadioGroup>
