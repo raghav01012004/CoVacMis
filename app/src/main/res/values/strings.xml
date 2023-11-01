@@ -11,12 +11,9 @@
     <string name="others">Others</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
-<<<<<<< HEAD
     <string name="healthcare_ins_name">HealthCare Ins. Name</string>
     <string name="log_in">LOG IN</string>
-=======
     <string name="AppLogo">App Logo</string>
     <string name="vaccinename">VaccineName</string>
     <string name="combination">Combination:</string>
->>>>>>> killer
 </resources>
