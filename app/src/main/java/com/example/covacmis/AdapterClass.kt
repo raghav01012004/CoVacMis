@@ -1,5 +1,6 @@
 package com.example.covacmis
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,13 +21,21 @@ class AdapterClass(private val dataList:ArrayList<DataClass>):RecyclerView.Adapt
         val currentItem = dataList[position]
         holder.rvAge.text = currentItem.ageGroup
         holder.rvVaccine.text = currentItem.dataVaccineName
-
     }
 
 
-    class ViewHolderClass(itemView: View):RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolderClass(itemView: View):RecyclerView.ViewHolder(itemView) {
         val rvVaccine:TextView = itemView.findViewById(R.id.VaccineName)
         val rvAge:TextView = itemView.findViewById(R.id.Age)
 
+        init {
+            itemView.setOnClickListener {
+                val position = adapterPosition
+                val clickedItem = dataList[position]
+                val intent = Intent(itemView.context, VaccineDetail::class.java)
+                intent.putExtra("clickedItem", clickedItem)
+                itemView.context.startActivity(intent)
+            }
+        }
     }
 }

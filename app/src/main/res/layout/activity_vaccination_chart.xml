@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/gradwp"
     android:layout_height="match_parent"
     tools:context=".VaccinationChart">
 
@@ -11,6 +12,8 @@
         android:layout_height="match_parent"
         android:id="@+id/recyclerview"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="20dp" />
+        android:clickable="true"
+        android:layout_marginTop="20dp"
+        android:focusable="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,8 +8,7 @@
     android:layout_marginHorizontal="15dp"
     android:layout_marginVertical="20dp"
     app:cardCornerRadius="20dp"
-    android:clickable="true"
-    android:focusable="true"
+    app:cardBackgroundColor="#EBC3D1"
     app:cardElevation="8dp">
 
     <LinearLayout
@@ -34,7 +33,7 @@
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            />
 
         <TextView
             android:layout_width="wrap_content"
@@ -64,7 +63,7 @@
             />
 
         <Space
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 

@@ -62,8 +62,8 @@ class VaccinationChart : AppCompatActivity() {
                         val dataClass = DataClass(key,resultString)
                         dataList.add(dataClass)
                     }
-                recyclerView.adapter = AdapterClass(dataList)
-
+                val myAdapter = AdapterClass(dataList)
+                recyclerView.adapter = myAdapter
             },
             { error ->
                 Log.d("VaccinationChart", error.toString())
