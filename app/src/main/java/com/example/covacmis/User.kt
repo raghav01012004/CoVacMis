@@ -9,4 +9,3 @@ data class User(
     val mobile_no: String,
     val vaccines:MutableList<String>,
 )
-

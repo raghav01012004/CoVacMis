@@ -51,7 +51,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.083" />
+        app:layout_constraintVertical_bias="0.083"
+        android:layout_marginRight="68dp" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -100,7 +101,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText"
                 android:layout_width="281dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:backgroundTint="#FAFAFA"
                 android:ems="10"
                 android:hint="UserName"
@@ -124,7 +125,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editText2"
                 android:layout_width="281dp"
-                android:layout_height="50dp"
+                android:layout_height="60dp"
                 android:backgroundTint="#FAFAFA"
                 android:ems="10"
                 android:hint="PassWord"

@@ -21,12 +21,15 @@ class AdapterClass(private val dataList:ArrayList<DataClass>):RecyclerView.Adapt
         val currentItem = dataList[position]
         holder.rvAge.text = currentItem.ageGroup
         holder.rvVaccine.text = currentItem.dataVaccineName
+        holder.rvDoseCount.text = currentItem.doseCount
+
     }
 
 
     inner class ViewHolderClass(itemView: View):RecyclerView.ViewHolder(itemView) {
         val rvVaccine:TextView = itemView.findViewById(R.id.VaccineName)
         val rvAge:TextView = itemView.findViewById(R.id.Age)
+        val rvDoseCount:TextView = itemView.findViewById(R.id.remDose)
 
         init {
             itemView.setOnClickListener {

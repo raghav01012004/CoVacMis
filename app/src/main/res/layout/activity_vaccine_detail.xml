@@ -11,6 +11,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="#A6F2B8FF"
         android:layout_marginVertical="30dp"
         app:cardElevation="8dp"
         app:cardCornerRadius="10dp"
@@ -20,12 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:background="#A6F2B8FF"
             android:layout_marginBottom="80dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/heading"
                 android:layout_width="wrap_content"
+                android:textColor="@color/black"
                 android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
                 android:layout_height="wrap_content"
@@ -42,6 +45,7 @@
 
                 <TextView
                     android:id="@+id/type"
+                    android:textColor="#333333"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10sp"
@@ -51,6 +55,7 @@
 
                 <TextView
                     android:id="@+id/typedesc"
+                    android:textColor="#333333"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3sp"
@@ -69,6 +74,7 @@
                 <TextView
                     android:id="@+id/textView16"
                     android:layout_width="wrap_content"
+                    android:textColor="#333333"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:textSize="18sp"
@@ -80,6 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
+                    android:textColor="#333333"
                     android:layout_marginLeft="3sp"
                     android:text="True"
                     android:layout_marginStart="3sp" />
@@ -95,6 +102,7 @@
                 <TextView
                     android:id="@+id/textView18"
                     android:layout_width="wrap_content"
+                    android:textColor="#333333"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:layout_marginLeft="10dp"
@@ -104,6 +112,7 @@
                 <TextView
                     android:id="@+id/gender"
                     android:layout_width="wrap_content"
+                    android:textColor="#333333"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="Male"
@@ -124,6 +133,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:layout_marginLeft="10dp"
+                    android:textColor="#333333"
                     android:text="Age Group: "
                     android:layout_marginStart="10dp" />
 
@@ -132,6 +142,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
+                    android:textColor="#333333"
                     android:text="0 - 1"
                     android:layout_marginStart="3dp"
                     android:textSize="18sp"/>
@@ -140,6 +151,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" years"
+                    android:textColor="#333333"
                     android:textSize="18sp"/>
 
             </LinearLayout>
@@ -154,6 +166,7 @@
                     android:id="@+id/textView23"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#333333"
                     android:textSize="18sp"
                     android:layout_marginLeft="10dp"
                     android:text="Dose Count:"
@@ -161,6 +174,7 @@
 
                 <TextView
                     android:id="@+id/dosecnt"
+                    android:textColor="#333333"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
@@ -180,6 +194,7 @@
                     android:id="@+id/textView25"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#333333"
                     android:textSize="18sp"
                     android:layout_marginLeft="10dp"
                     android:text="Companies:"
@@ -189,6 +204,7 @@
                     android:id="@+id/companynm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="#333333"
                     android:layout_marginLeft="3dp"
                     android:text="Company1, Company2"
                     android:layout_marginStart="3dp"
@@ -197,5 +213,11 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/companyRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        />
 
 </LinearLayout>
