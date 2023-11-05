@@ -16,12 +16,16 @@ import org.json.JSONArray
 class VaccinationChart : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var dataList:ArrayList<DataClass>
-    private lateinit var vaccineName:ArrayList<String>
-    private lateinit var ageGroup:ArrayList<String>
+    private lateinit var dataList: ArrayList<DataClass>
+    private lateinit var vaccineName: ArrayList<String>
+    private lateinit var ageGroup: ArrayList<String>
+
+    private lateinit var userInfo:User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccination_chart)
+
+        userInfo = intent.getSerializableExtra("user") as User
 
         vaccineName = arrayListOf()
 
@@ -36,34 +40,47 @@ class VaccinationChart : AppCompatActivity() {
     }
 
 
-    private fun getVaccines(){
-        val url = "http://10.0.2.2:8000/vaccines"
+    private fun getVaccines() {
+        val url = "https://covacmis.onrender.com/vaccines"
 
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
             { response ->
+                for (key in response.keys()) {
+                    val vaccineData = response.getJSONObject(key)
+                    val ageGroupList = vaccineData.optJSONArray("Age_group")
 
-                    for (key in response.keys()) {
+                    val ageGroupString = when {
+                        ageGroupList == null -> "any"
+                        ageGroupList.length() == 1 -> ">${ageGroupList.getDouble(0)}"
+                        ageGroupList.getDouble(0) == ageGroupList.getDouble(1) -> "${ageGroupList.getDouble(0)}"
+                        else -> "${ageGroupList.getDouble(0)} - ${ageGroupList.getDouble(1)}"
+                    }
 
-                        val resultString = when (val value = response.get(key)) {
-                            is JSONArray -> {
-                                val element1 = value.opt(0) as? Number
-                                val element2 = value.opt(1) as? Number
+                    val userVaccineData = userInfo.vaccines[key]
+                    println(userVaccineData)
+                    val userInfoDoseCount = if (userVaccineData is Map<*, *>) {
+                        (userVaccineData["dose_count"] as Double)
+                    } else {
+                        0.0
+                    }
+                    val doseCount = vaccineData.optInt("dose_count").toDouble() - userInfoDoseCount
 
-                                when {
-                                    element1 == null && element2 == null -> "No age"
-                                    element1 == element2 -> element1.toString()
-                                    else -> ">${element1 ?: element2}"
-                                }
-                            }
-                            else -> "any"
-                        }
-
-                        val dataClass = DataClass(key,resultString)
+                    if (doseCount > 0) {
+                        val doseCountString = doseCount.toString()
+                        val dataClass = DataClass(key, ageGroupString, doseCountString)
                         dataList.add(dataClass)
                     }
-                val myAdapter = AdapterClass(dataList)
+                    else{
+                        continue
+                    }
+                }
+
+                val myAdapter = AdapterClass(dataList,userInfo)
                 recyclerView.adapter = myAdapter
+
+                // Now you have a list of DataClass objects
+                // You can do whatever you want with this list here
             },
             { error ->
                 Log.d("VaccinationChart", error.toString())
@@ -72,4 +89,5 @@ class VaccinationChart : AppCompatActivity() {
         val queue = Volley.newRequestQueue(this)
         queue.add(request)
     }
+
 }

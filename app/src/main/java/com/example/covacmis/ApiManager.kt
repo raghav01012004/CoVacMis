@@ -13,7 +13,7 @@ class ApiManager(private val context: Context) {
     private val gson: Gson = Gson()
 
     fun getVacObj(vaccineName: String, callback: (VacObj?) -> Unit) {
-        val url = "http://10.0.2.2:8000/vaccines/$vaccineName"
+        val url = "https://covacmis.onrender.com/vaccines/$vaccineName"
 
         val request = StringRequest(Request.Method.GET, url,
             { response ->
