@@ -15,7 +15,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -35,7 +34,7 @@ class ParentSignUp : AppCompatActivity() {
         val pass = findViewById<EditText>(R.id.editText5)
         val mobile = findViewById<EditText>(R.id.editText6)
         val dob = findViewById<EditText>(R.id.editText7)
-        val vaccines : MutableList<String> = mutableListOf()
+        val vaccines : Map<String,Any> = mapOf()
 
         // Here are present day, month & year
         val calender = Calendar.getInstance()
@@ -113,11 +112,11 @@ class ParentSignUp : AppCompatActivity() {
                 put("password", user.password)
                 put("gender", user.gender)
                 put("mobile_no", user.mobile_no)
-                put("vaccines",JSONArray(user.vaccines))
+                put("vaccines",user.vaccines)
             }
             println(requestBody)
 
-            val url = "http://10.0.2.2:8000/create" // Replace with your endpoint URL
+            val url = "https://covacmis.onrender.com/create" // Replace with your endpoint URL
 
             val request = JsonObjectRequest(
                 Request.Method.POST, url, requestBody,

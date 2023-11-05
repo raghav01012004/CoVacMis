@@ -1,7 +1,7 @@
 package com.example.covacmis
 
 data class VacObj(
-    val Age_group: List<Int>,
+    val Age_group: List<Double>,
     val companies: List<String>,
     val dose_count: Int,
     val dose_gap: List<Int>,

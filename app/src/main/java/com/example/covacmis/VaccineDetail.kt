@@ -81,7 +81,7 @@ class VaccineDetail : AppCompatActivity() {
 
     }
     private fun getCompanyData(companyName: String, vaccineName: String) {
-        val url = "http://10.0.2.2:8000/price/$companyName/$vaccineName"
+        val url = "https://covacmis.onrender.com/price/$companyName/$vaccineName"
         println(url)
 
         val request = JsonArrayRequest(

@@ -19,9 +19,13 @@ class VaccinationChart : AppCompatActivity() {
     private lateinit var dataList: ArrayList<DataClass>
     private lateinit var vaccineName: ArrayList<String>
     private lateinit var ageGroup: ArrayList<String>
+
+    private lateinit var userInfo:User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccination_chart)
+
+        userInfo = intent.getSerializableExtra("user") as User
 
         vaccineName = arrayListOf()
 
@@ -37,7 +41,7 @@ class VaccinationChart : AppCompatActivity() {
 
 
     private fun getVaccines() {
-        val url = "http://10.0.2.2:8000/vaccines"
+        val url = "https://covacmis.onrender.com/vaccines"
 
         val request = JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -53,14 +57,26 @@ class VaccinationChart : AppCompatActivity() {
                         else -> "${ageGroupList.getDouble(0)} - ${ageGroupList.getDouble(1)}"
                     }
 
-                    val doseCount = vaccineData.optInt("dose_count")
-                    val doseCountString = doseCount.toString()
+                    val userVaccineData = userInfo.vaccines[key]
+                    println(userVaccineData)
+                    val userInfoDoseCount = if (userVaccineData is Map<*, *>) {
+                        (userVaccineData["dose_count"] as Double)
+                    } else {
+                        0.0
+                    }
+                    val doseCount = vaccineData.optInt("dose_count").toDouble() - userInfoDoseCount
 
-                    val dataClass = DataClass(key, ageGroupString, doseCountString)
-                    dataList.add(dataClass)
+                    if (doseCount > 0) {
+                        val doseCountString = doseCount.toString()
+                        val dataClass = DataClass(key, ageGroupString, doseCountString)
+                        dataList.add(dataClass)
+                    }
+                    else{
+                        continue
+                    }
                 }
 
-                val myAdapter = AdapterClass(dataList)
+                val myAdapter = AdapterClass(dataList,userInfo)
                 recyclerView.adapter = myAdapter
 
                 // Now you have a list of DataClass objects

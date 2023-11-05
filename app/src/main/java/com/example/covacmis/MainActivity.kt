@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getData(username: String, password: String) {
         // Assuming you have `username` and `password` as Strings
-        val url = "http://10.0.2.2:8000/login/$username/$password"
+        val url = "https://covacmis.onrender.com/login/$username/$password"
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             { response ->
                 val user = Gson().fromJson(response.toString(), User::class.java)
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 //                    println(response[i])
 //                }
                 if (user?.fullname != null && user.fullname.isNotEmpty()) {
-                    val intent = Intent(applicationContext, VaccinationChart::class.java)
+                    val intent = Intent(applicationContext, VaccinationChart::class.java).putExtra("user",user)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_SHORT)
