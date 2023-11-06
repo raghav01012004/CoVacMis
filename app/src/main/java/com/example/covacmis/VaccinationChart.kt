@@ -4,9 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -19,11 +23,15 @@ class VaccinationChart : AppCompatActivity() {
     private lateinit var dataList: ArrayList<DataClass>
     private lateinit var vaccineName: ArrayList<String>
     private lateinit var ageGroup: ArrayList<String>
+    private lateinit var overlayContainer: FrameLayout
 
     private lateinit var userInfo:User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccination_chart)
+
+        overlayContainer = findViewById(R.id.overlayContainer)
+        overlayContainer.visibility = View.GONE
 
         userInfo = intent.getSerializableExtra("user") as User
 
@@ -41,6 +49,7 @@ class VaccinationChart : AppCompatActivity() {
 
 
     private fun getVaccines() {
+        dataList.clear()
         val url = "https://covacmis.onrender.com/vaccines"
 
         val request = JsonObjectRequest(
@@ -76,11 +85,8 @@ class VaccinationChart : AppCompatActivity() {
                     }
                 }
 
-                val myAdapter = AdapterClass(dataList,userInfo)
+                val myAdapter = AdapterClass(dataList,userInfo,overlayContainer)
                 recyclerView.adapter = myAdapter
-
-                // Now you have a list of DataClass objects
-                // You can do whatever you want with this list here
             },
             { error ->
                 Log.d("VaccinationChart", error.toString())

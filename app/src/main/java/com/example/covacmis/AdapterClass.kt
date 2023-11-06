@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +16,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
-class AdapterClass(private val dataList: ArrayList<DataClass>, private var userInfo: User) :
+class AdapterClass(private val dataList: ArrayList<DataClass>, private var userInfo: User,private val overlayContainer:FrameLayout) :
     RecyclerView.Adapter<AdapterClass.ViewHolderClass>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val itemView =
@@ -53,7 +55,8 @@ class AdapterClass(private val dataList: ArrayList<DataClass>, private var userI
             rvAddDoseButton.setOnClickListener {
                 val position = adapterPosition
                 val clickedItem = dataList[position]
-
+                overlayContainer.visibility = View.VISIBLE
+                rvAddDoseButton.isEnabled = false
                 // Assuming you have a username stored in userInfo
                 val username = userInfo.username
                 val vaccineName = clickedItem.dataVaccineName
@@ -99,16 +102,18 @@ class AdapterClass(private val dataList: ArrayList<DataClass>, private var userI
                         if (response.getInt("success") == 1) {
                             Toast.makeText(
                                 itemView.context,
-                                "Vaccination successful!",
+                                "$vaccineName Vaccination successful!",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
                             Toast.makeText(
                                 itemView.context,
-                                "Failed to vaccinate. Please try again.",
+                                "Failed to register your vaccination of $vaccineName. Please try again.",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                        overlayContainer.visibility = View.GONE
+                        rvAddDoseButton.isEnabled = true
                     },
                     { error ->
                         Log.d("AdapterClass", error.toString())
