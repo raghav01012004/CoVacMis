@@ -16,4 +16,21 @@
         android:layout_marginTop="20dp"
         android:focusable="true" />
 
+    <FrameLayout
+        android:id="@+id/overlayContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyleLarge" />
+    </FrameLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

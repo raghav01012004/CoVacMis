@@ -7,6 +7,21 @@
     android:background="@drawable/gradwp"
     tools:context=".MainActivity">
 
+    <FrameLayout
+        android:id="@+id/loginOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
 
     <Button
         android:id="@+id/button"
@@ -42,6 +57,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="68dp"
+        android:layout_marginRight="68dp"
         android:gravity="center"
         android:text="SIGN UP"
         android:textColor="#A600C2"
@@ -51,8 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.083"
-        android:layout_marginRight="68dp" />
+        app:layout_constraintVertical_bias="0.083" />
 
     <ImageView
         android:id="@+id/imageView4"
