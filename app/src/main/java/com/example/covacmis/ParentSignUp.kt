@@ -106,63 +106,88 @@ class ParentSignUp : AppCompatActivity() {
 //                Toast.LENGTH_SHORT).show()
 //            Toast.makeText(this, "${radioGender.text}", Toast.LENGTH_SHORT).show()
 
+            val fullname = name.text?.toString()
+            val username = uname.text?.toString()
+            val passw = pass.text?.toString()
+            val date = dob.text?.toString()
+            val mob = mobile.text?.toString()
 
-            val user = User(
-                fullname = name.text.toString(),
-                username = uname.text.toString(),
-                dob = dob.text.toString(),
-                password = pass.text.toString(),
-                gender = radioGender.text.toString(),
-                mobile_no = mobile.text.toString(),
-                vaccines = vaccines
-            )
-
-            val requestBody = JSONObject().apply {
-                put("fullname", user.fullname)
-                put("username", user.username)
-                put("dob", user.dob)
-                put("password", user.password)
-                put("gender", user.gender)
-                put("mobile_no", user.mobile_no)
-                put("vaccines",JSONObject(user.vaccines))
+            if (fullname.isNullOrEmpty() || username.isNullOrEmpty() || passw.isNullOrEmpty() || date.isNullOrEmpty() || mob.isNullOrEmpty()) {
+                Toast.makeText(
+                    applicationContext,
+                    "Please fill the above fields",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+            //check the length of mobile no. -->
+            else if(mob.length != 10)
+                {
+                    Toast.makeText(applicationContext, "Invalid Mobile no. !", Toast.LENGTH_SHORT).show()
+                }
+            else if(passw.length < 6)
+            {
+                Toast.makeText(applicationContext, "Password should be at-least 6 characters", Toast.LENGTH_SHORT).show()
+            }
+            else {
 
-            val url = "https://covacmis.onrender.com/create" // Replace with your endpoint URL
+                val user = User(
+                    fullname = name.text.toString(),
+                    username = uname.text.toString(),
+                    dob = dob.text.toString(),
+                    password = pass.text.toString(),
+                    gender = radioGender.text.toString(),
+                    mobile_no = mobile.text.toString(),
+                    vaccines = vaccines
+                )
 
-            val request = JsonObjectRequest(
-                Request.Method.POST, url, requestBody,
-                { response ->
-                    if(response!=null){
-                        Toast.makeText(applicationContext,"Welcome ${user.fullname} to CoVacMis...",Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(applicationContext,VaccinationChart::class.java).putExtra("user",user))
-                    }
+                val requestBody = JSONObject().apply {
+                    put("fullname", user.fullname)
+                    put("username", user.username)
+                    put("dob", user.dob)
+                    put("password", user.password)
+                    put("gender", user.gender)
+                    put("mobile_no", user.mobile_no)
+                    put("vaccines",JSONObject(user.vaccines))
+                }
 
-                    signUpFrameLayout.visibility = View.GONE
-                    button.isEnabled = true
+                val url = "https://covacmis.onrender.com/create" // Replace with your endpoint URL
 
-                },
-                { error ->
+                val request = JsonObjectRequest(
+                    Request.Method.POST, url, requestBody,
+                    { response ->
+                        if(response!=null){
+                            Toast.makeText(applicationContext,"Welcome ${user.fullname} to CoVacMis...",Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(applicationContext,VaccinationChart::class.java).putExtra("user",user))
+                        }
+
+                        signUpFrameLayout.visibility = View.GONE
+                        button.isEnabled = true
+
+                    },
+                    { error ->
                         if(error is TimeoutError){
-                        signUpFrameLayout.visibility = View.GONE
-                        button.isEnabled = true
-                        Toast.makeText(this, "Server timed out. Please try again later!", Toast.LENGTH_SHORT).show()
-                    }
-                    else if(error is NoConnectionError){
-                        signUpFrameLayout.visibility = View.GONE
-                        button.isEnabled = true
-                        Toast.makeText(this, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
-                    }
-                    else if(error is NetworkError){
-                        signUpFrameLayout.visibility = View.GONE
-                        button.isEnabled = true
-                        Toast.makeText(this, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                            signUpFrameLayout.visibility = View.GONE
+                            button.isEnabled = true
+                            Toast.makeText(this, "Server timed out. Please try again later!", Toast.LENGTH_SHORT).show()
+                        }
+                        else if(error is NoConnectionError){
+                            signUpFrameLayout.visibility = View.GONE
+                            button.isEnabled = true
+                            Toast.makeText(this, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
+                        }
+                        else if(error is NetworkError){
+                            signUpFrameLayout.visibility = View.GONE
+                            button.isEnabled = true
+                            Toast.makeText(this, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
+                        }
+                    })
 
 // Add the request to the RequestQueue
-            val queue = Volley.newRequestQueue(this)
-            queue.add(request)
+                val queue = Volley.newRequestQueue(this)
+                queue.add(request)
 
+
+            }
         }
     }
     private fun ageCalc(sy: Int, sm: Int, cy: Int, cm: Int): Int {

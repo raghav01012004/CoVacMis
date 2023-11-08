@@ -16,4 +16,5 @@
     <string name="AppLogo">App Logo</string>
     <string name="vaccinename">VaccineName</string>
     <string name="combination">Combination:</string>
+    <string name="phone_no">Phone No.</string>
 </resources>
