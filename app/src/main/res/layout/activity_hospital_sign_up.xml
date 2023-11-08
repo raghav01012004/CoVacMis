@@ -49,6 +49,7 @@
                 android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="@string/healthcare_ins_name"
+                android:gravity="center"
                 android:inputType="text"
                 android:text=""
                 android:textColor="#AF32C4"
@@ -65,39 +66,16 @@
             android:layout_marginTop="120dp"
             android:textColor="#AF32C4"
             android:textColorHint="#B276BD"
-            app:startIconDrawable="@drawable/baseline_numbers_24">
+            app:startIconDrawable="@drawable/baseline_person_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextText2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="Registration No."
+                android:hint="@string/username"
+                android:gravity="center"
                 android:inputType="text"
-                android:text=""
-                android:textColor="#AF32C4"
-                android:textColorHint="#B276BD"
-                android:textSize="20sp"
-                android:textStyle="bold"  />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="281dp"
-            android:layout_height="60dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="180dp"
-            android:textColor="#AF32C4"
-            android:textColorHint="#B276BD"
-            app:startIconDrawable="@drawable/baseline_local_phone_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editTextText3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:ems="10"
-                android:hint="Phone No."
-                android:inputType="phone"
                 android:text=""
                 android:textColor="#AF32C4"
                 android:textColorHint="#B276BD"
@@ -113,6 +91,31 @@
             android:layout_marginTop="240dp"
             android:textColor="#AF32C4"
             android:textColorHint="#B276BD"
+            app:startIconDrawable="@drawable/baseline_local_phone_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextText3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:hint="@string/phone_no"
+                android:gravity="center"
+                android:inputType="phone"
+                android:text=""
+                android:textColor="#AF32C4"
+                android:textColorHint="#B276BD"
+                android:textSize="20sp"
+                android:textStyle="bold"  />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="281dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="180dp"
+            android:textColor="#AF32C4"
+            android:textColorHint="#B276BD"
             app:startIconDrawable="@drawable/baseline_lock_24">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -120,7 +123,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
-                android:hint="Password"
+                android:hint="@string/password"
+                android:gravity="center"
                 android:inputType="text"
                 android:text=""
                 android:textColor="#AF32C4"

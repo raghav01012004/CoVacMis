@@ -152,6 +152,18 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Switch
+            android:id="@+id/hospitalSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="320dp"
+            android:text="Login as Hospital "
+            android:textStyle="bold|italic"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            android:thumb="@drawable/baseline_local_hospital_24"/>
+
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
 import com.android.volley.NetworkError
@@ -59,6 +60,11 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val sw1 = findViewById<Switch>(R.id.hospitalSwitch)
+        sw1?.setOnCheckedChangeListener({ _ , isChecked ->
+            val message = if (isChecked) "Hospital" else "Individual"
+            Toast.makeText(this@MainActivity, "Identifying as : " + message, Toast.LENGTH_SHORT).show()
+        })
 
     }
 
