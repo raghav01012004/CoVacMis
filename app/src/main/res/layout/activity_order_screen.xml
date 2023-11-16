@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginVertical="20dp"
+    android:layout_marginHorizontal="12dp"
+    tools:context=".OrderScreen">
+
+    <TextView
+        android:id="@+id/order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="This is hospital orders screen" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orderRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

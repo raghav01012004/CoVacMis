@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mainOverlay:FrameLayout
     private lateinit var button: Button
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
+    private lateinit var sw1: Switch
+    private lateinit var message:String
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val textView = findViewById<TextView>(R.id.textView4)
         val username = findViewById<EditText>(R.id.editText)
         val password = findViewById<EditText>(R.id.editText2)
-        button = findViewById<Button>(R.id.button)
+        button = findViewById(R.id.button)
 
 
 
@@ -49,7 +53,12 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                getData(uname, pass)
+                if(message=="Individual"){
+                    getData(uname,pass)
+                }
+                else{
+                    getHospitalData(uname,pass)
+                }
             }
 
         }
@@ -60,11 +69,12 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val sw1 = findViewById<Switch>(R.id.hospitalSwitch)
-        sw1?.setOnCheckedChangeListener({ _ , isChecked ->
-            val message = if (isChecked) "Hospital" else "Individual"
-            Toast.makeText(this@MainActivity, "Identifying as : " + message, Toast.LENGTH_SHORT).show()
-        })
+        sw1 = findViewById(R.id.hospitalSwitch)
+        sw1.setOnCheckedChangeListener { _, isChecked ->
+            message = if (isChecked) "Hospital" else "Individual"
+            Toast.makeText(this@MainActivity, "Identifying as : " + message, Toast.LENGTH_SHORT)
+                .show()
+        }
 
     }
 
@@ -83,6 +93,52 @@ class MainActivity : AppCompatActivity() {
 //                }
                 if (user?.fullname != null && user.fullname.isNotEmpty()) {
                     val intent = Intent(applicationContext, VaccinationChart::class.java).putExtra("user",user)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                mainOverlay.visibility = View.GONE
+                button.isEnabled = true
+            },
+            { error ->
+                if(error is TimeoutError){
+                    mainOverlay.visibility = View.GONE
+                    button.isEnabled = true
+                    Toast.makeText(this, "Login timed out. Please try again!", Toast.LENGTH_SHORT).show()
+                }
+                else if(error is NoConnectionError){
+                    mainOverlay.visibility = View.GONE
+                    button.isEnabled = true
+                    Toast.makeText(this, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
+                }
+                else if(error is NetworkError){
+                    mainOverlay.visibility = View.GONE
+                    button.isEnabled = true
+                    Toast.makeText(this, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
+                }
+            })
+        val queue = Volley.newRequestQueue(this)
+        queue.add(request)
+    }
+
+    private fun getHospitalData(hospitalName: String, password: String) {
+
+        mainOverlay.visibility = View.VISIBLE
+        button.isEnabled = false
+
+        // Assuming you have `username` and `password` as Strings
+        val url = "https://covacmis.onrender.com/hospital/login/$hospitalName/$password"
+        println(url)
+        val request = JsonObjectRequest(Request.Method.GET, url, null,
+            { response ->
+                val hospital = Gson().fromJson(response.toString(), HospitalLogin::class.java)
+                println(hospital)
+//                for(i in response.keys()){
+//                    println(response[i])
+//                }
+                if (hospital?.hospitalId != null && hospital.hospitalId.isNotEmpty()) {
+                    val intent = Intent(applicationContext, OrderScreen::class.java).putExtra("hospitalDetail",hospital)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_SHORT)
