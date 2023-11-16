@@ -29,7 +29,7 @@ class OrderScreen : AppCompatActivity() {
 
     private fun getOrders(hospitalName:String){
         orderList.clear()
-        val url = "http://10.0.2.2:8000/hospital/getOrders/$hospitalName"
+        val url = "https://covacmis.onrender.com/hospital/getOrders/$hospitalName"
         val request = JsonObjectRequest(
             Request.Method.GET,url,null,
             { response->
