@@ -50,7 +50,7 @@ class HospitalSignUp : AppCompatActivity() {
 
             Toast.makeText(applicationContext,"Suiiii",
                 Toast.LENGTH_SHORT).show()
-            intent = Intent(applicationContext,OtpVerification::class.java)
+            intent = Intent(applicationContext,hospitalList::class.java)
             startActivity(intent)
             }
         }
