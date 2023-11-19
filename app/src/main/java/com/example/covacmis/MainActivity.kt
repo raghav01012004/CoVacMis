@@ -20,7 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),OrderScreen.RecyclerViewReadyCallback {
 
     private lateinit var mainOverlay:FrameLayout
     private lateinit var button: Button
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.editText2)
         button = findViewById(R.id.button)
 
-
+        message = "Individual"
 
         button.setOnClickListener {
             val uname = username.text?.toString()
@@ -98,7 +98,6 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_SHORT)
                         .show()
                 }
-                mainOverlay.visibility = View.GONE
                 button.isEnabled = true
             },
             { error ->
@@ -166,5 +165,12 @@ class MainActivity : AppCompatActivity() {
             })
         val queue = Volley.newRequestQueue(this)
         queue.add(request)
+    }
+
+    override fun onRecyclerViewReady() {
+        runOnUiThread {
+            // Add any specific actions you want to perform here
+            Toast.makeText(this, "RecyclerView in OrderScreen is fully populated!", Toast.LENGTH_SHORT).show()
+        }
     }
 }
