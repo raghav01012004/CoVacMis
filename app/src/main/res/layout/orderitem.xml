@@ -14,9 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:background="#A6F2B8FF"
-            android:layout_marginVertical="15dp"
-            android:layout_marginRight="12dp">
+            android:layout_marginVertical="14dp"
+            >
 
             <TextView
                 android:id="@+id/userName"
@@ -26,7 +25,9 @@
                 android:text="username"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
-                android:textSize="17sp" />
+                android:layout_marginStart="14dp"
+                android:textSize="17sp"
+                android:layout_marginLeft="14dp" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -65,11 +66,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="#A6F2B8FF"
-                android:outlineAmbientShadowColor="@color/black"
+                android:layout_marginEnd="14dp"
                 android:clickable="true"
                 android:src="@drawable/ic_minus"
                 android:contentDescription="removeButton"
-                android:focusable="true" />
+                android:focusable="true"
+                android:layout_marginRight="14dp" />
 
 
         </LinearLayout>
