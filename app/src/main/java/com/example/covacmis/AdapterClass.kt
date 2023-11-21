@@ -16,8 +16,9 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
-class AdapterClass(private val dataList: ArrayList<DataClass>, private var userInfo: User,private val overlayContainer:FrameLayout) :
+class AdapterClass(private val dataList: ArrayList<DataClass>, private var userInfo: User,private val overlayContainer:FrameLayout,private val recyclerViewReadyListener: RecyclerViewReadyListener) :
     RecyclerView.Adapter<AdapterClass.ViewHolderClass>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
@@ -34,8 +35,12 @@ class AdapterClass(private val dataList: ArrayList<DataClass>, private var userI
         holder.rvVaccine.text = currentItem.dataVaccineName
         holder.rvDoseCount.text = currentItem.doseCount
 
-    }
+        if (position == dataList.size - 1 && position >= itemCount - 1) {
+            // Notify the listener when the last item is bound, indicating RecyclerView population completion
+            recyclerViewReadyListener.onRecyclerViewReady()
+        }
 
+    }
 
     inner class ViewHolderClass(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val rvVaccine: TextView = itemView.findViewById(R.id.VaccineName)

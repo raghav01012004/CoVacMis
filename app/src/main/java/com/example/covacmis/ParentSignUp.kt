@@ -17,6 +17,10 @@ import com.android.volley.Request
 import com.android.volley.TimeoutError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.CompositeDateValidator
+import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.json.JSONObject
@@ -59,31 +63,24 @@ class ParentSignUp : AppCompatActivity() {
         var sy: String
         // when floating action button is clicked
         btnDatePicker.setOnClickListener {
-            // Initiation date picker with
-            // MaterialDatePicker.Builder.datePicker()
-            // and building it using build()
-            val datePicker = MaterialDatePicker.Builder.datePicker().build()
-            datePicker.show(supportFragmentManager, "DatePicker")
+            val builder = MaterialDatePicker.Builder.datePicker()
 
-            // Setting up the event for when ok is clicked
+            // Set the range for the date picker to start from today
+            val constraintsBuilder = CalendarConstraints.Builder()
+            constraintsBuilder.setValidator(DateValidatorPointBackward.now())
+
+            builder.setCalendarConstraints(constraintsBuilder.build())
+            val datePicker = builder.build()
+
             datePicker.addOnPositiveButtonClickListener {
-                // formatting date in dd-mm-yyyy format.
-                val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
-                val yearFormatter = SimpleDateFormat("yyyy")
-                val monthFormatter = SimpleDateFormat("MM")
-                val dayFormatter = SimpleDateFormat("dd")
-
-                //Collecting Date in all formats
-                date = dateFormatter.format(Date(it))
-                sy = yearFormatter.format(Date(it))
-                sm = monthFormatter.format(Date(it))
-                sd = dayFormatter.format(Date(it))
-                val age = ageCalc(sy.toInt(),sm.toInt(),year,month)
-                Toast.makeText(this, "$date is selected. Age is $age", Toast.LENGTH_LONG).show()
-                dob.setText(date)
+                val selectedDate = datePicker.selection
+                if (selectedDate != null) {
+                    val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+                    val formattedDate = dateFormatter.format(selectedDate)
+                    dob.setText(formattedDate)
+                }
             }
 
-            // Setting up the event for when cancelled is clicked
             datePicker.addOnNegativeButtonClickListener {
                 Toast.makeText(this, "${datePicker.headerText} is cancelled", Toast.LENGTH_LONG).show()
             }
@@ -92,7 +89,31 @@ class ParentSignUp : AppCompatActivity() {
             datePicker.addOnCancelListener {
                 Toast.makeText(this, "Date Picker Cancelled", Toast.LENGTH_LONG).show()
             }
+
+            datePicker.show(supportFragmentManager, "DatePicker")
         }
+
+
+
+            // Setting up the event for when ok is clicked
+//            datePicker.addOnPositiveButtonClickListener {
+//                // formatting date in dd-mm-yyyy format.
+//                val dateFormatter = SimpleDateFormat("dd-MM-yyyy")
+//                val yearFormatter = SimpleDateFormat("yyyy")
+//                val monthFormatter = SimpleDateFormat("MM")
+//                val dayFormatter = SimpleDateFormat("dd")
+//
+//                //Collecting Date in all formats
+//                date = dateFormatter.format(Date(it))
+//                sy = yearFormatter.format(Date(it))
+//                sm = monthFormatter.format(Date(it))
+//                sd = dayFormatter.format(Date(it))
+//                val age = ageCalc(sy.toInt(),sm.toInt(),year,month)
+//                Toast.makeText(this, "$date is selected. Age is $age", Toast.LENGTH_LONG).show()
+//                dob.setText(date)
+//            }
+
+            // Setting up the event for when cancelled is clicked
 
 
 //        val gender = findViewById<EditText>(R.id.editText8)
@@ -155,7 +176,10 @@ class ParentSignUp : AppCompatActivity() {
                 val request = JsonObjectRequest(
                     Request.Method.POST, url, requestBody,
                     { response ->
-                        if(response!=null){
+                        if(response["message"]=="Username already taken"){
+                            Toast.makeText(this,"Username already taken",Toast.LENGTH_SHORT).show()
+                        }
+                        else{
                             Toast.makeText(applicationContext,"Welcome ${user.fullname} to CoVacMis...",Toast.LENGTH_SHORT).show()
                             startActivity(Intent(applicationContext,VaccinationChart::class.java).putExtra("user",user))
                         }

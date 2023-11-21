@@ -42,6 +42,8 @@ class CompanyAdapter(private val companyDataList:ArrayList<SetCompanyData>,priva
                 val username = userDetail.username
                 val companyName = clickedItem.companyName
 
+                itemView.context.startActivity(Intent(itemView.context,HospitalList::class.java))
+
                 //TODO(FETCH USER LATITUDE LONGITUDE AND ADDRESS(CITY) AFTER FETCHING PASS THE ABOVE 4 DETAILS(brandName,vaccine,username,companyName) + (latitude,longitude and address) to the next screen i.e. hospital list
              }
         }
