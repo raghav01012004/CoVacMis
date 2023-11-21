@@ -2,8 +2,12 @@ package com.example.covacmis
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 
 class HospitalList : AppCompatActivity() {
 
@@ -24,65 +28,44 @@ class HospitalList : AppCompatActivity() {
         supportActionBar?.hide()
         myRecyclerView = findViewById(R.id.recyclerView2)
 
-        val hospitalArray = arrayOf(
-            "Fortis",
-            "Kailash",
-            "AIIMS",
-            "SJM",
-            "MAX",
-            "Jaypee",
-            "Evan"
-        )
-
-        val hospitalCityArray = arrayOf(
-            "Noida",
-            "GZB",
-            "Rishikesh",
-            "GZB",
-            "Delhi",
-            "Greater Noida",
-            "MZN"
-        )
-
-        val hospitalDistanceArray = arrayOf(
-            "1",
-            "16",
-            "250",
-            "25",
-            "40",
-            "36",
-            "130"
-        )
-
-//        val newsContent = arrayOf(
-//            getString(R.string.news_content), getString(R.string.news_content),
-//            getString(R.string.news_content), getString(R.string.news_content),
-//            getString(R.string.news_content), getString(R.string.news_content)
-//        )
-
-        // to set hav bhav of items inside recyclerview, vertcially scrolling, horizontally, uniform grid
         myRecyclerView.layoutManager = LinearLayoutManager(this)
-        hospitalArrayList = arrayListOf<Hospital>()
+        myRecyclerView.setHasFixedSize(true)
+        hospitalArrayList = arrayListOf()
 
-        for( index in hospitalArray.indices){
-            val hospital = Hospital(hospitalArray[index], hospitalCityArray[index], hospitalDistanceArray[index])
-            hospitalArrayList.add(hospital)
-        }
+        getHospitalData()
 
-        val myAdapter = MyAdapter(hospitalArrayList, this)
-        myRecyclerView.adapter = myAdapter
+    }
 
-        myAdapter.setOnItemClickListener(object : MyAdapter.onItemClickListener {
-            override fun onItemClicking(position: Int) {
-                // on clicking each item , what action do you want to perform
+    private fun getHospitalData(){
+        val url = "http://10.0.2.2:8000/hospital/getData"
+        val request = JsonObjectRequest(
+            Request.Method.GET,url,null,
+            {
+                response->
+                    println(response)
+                    for(det in response.keys()){
+                        val hosObj = response.getJSONObject(det)
+                        val locArray = hosObj.getJSONArray("location")
+                        val address = hosObj["address"]
+                        val hospitalName = hosObj["hospitalName"]
+                        val createHospitalDetailObject = Hospital(hospitalName.toString(),address.toString(),"40")
+                        hospitalArrayList.add(createHospitalDetailObject)
+                    }
+                val myAdapter = MyAdapter(hospitalArrayList,this)
+                myRecyclerView.adapter = myAdapter
 
-//                val intent = Intent(this@hospitalList, NewsDetailActivity::class.java)
-//                intent.putExtra("heading", newsArrayList[position].newsHeading)
-//                intent.putExtra("imageId", newsArrayList[position].newsImage)
-//                intent.putExtra("newscontent", newsArrayList[position].newsContent)
-//                startActivity(intent)
+                myAdapter.setOnItemClickListener(object : MyAdapter.onItemClickListener {
+                    override fun onItemClicking(position: Int) {
+                    }
+                })
+
+            },
+            {
+                error->
+                    Log.d("HospitalList",error.toString())
             }
-
-        })
+        )
+        val queue = Volley.newRequestQueue(this)
+        queue.add(request)
     }
 }

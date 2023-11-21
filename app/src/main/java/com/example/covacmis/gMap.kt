@@ -22,8 +22,8 @@ internal class gMap : AppCompatActivity(), OnMapReadyCallback {
 
     private final var FINE_PERMISSION_CODE = 1
     private lateinit var myMap: GoogleMap
-    lateinit var currentLocation: Location
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var currentLocation: Location
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

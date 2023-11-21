@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 
-class MyAdapter(var hospitalArrayList: ArrayList<Hospital>, var context : Activity) :
+class MyAdapter(private var hospitalArrayList: ArrayList<Hospital>, var context : Activity) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
 
     private lateinit var myListener: onItemClickListener
@@ -46,10 +46,10 @@ class MyAdapter(var hospitalArrayList: ArrayList<Hospital>, var context : Activi
 
     // it holds the view so views are not created everytime, so memory can be saved
     class MyViewHolder(itemView : View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView){
-        val hTitle = itemView.findViewById<TextView>(R.id.textViewHospitalName)
-        val hCity = itemView.findViewById<TextView>(R.id.textViewCity)
-        val hDistance = itemView.findViewById<TextView>(R.id.textViewDistance)
-        val mapBtn = itemView.findViewById<ImageButton>(R.id.imageButton)
+        val hTitle:TextView = itemView.findViewById(R.id.textViewHospitalName)
+        val hCity:TextView = itemView.findViewById(R.id.textViewCity)
+        val hDistance:TextView = itemView.findViewById(R.id.textViewDistance)
+        private val mapBtn:ImageButton = itemView.findViewById(R.id.imageButton)
 
         init {
             itemView.setOnClickListener {

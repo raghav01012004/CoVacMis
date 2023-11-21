@@ -1,9 +1,12 @@
 package com.example.covacmis
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +19,7 @@ import org.json.JSONArray
 import java.net.URL
 import java.net.URLEncoder
 
-class VaccineDetail : AppCompatActivity() {
+class VaccineDetail : AppCompatActivity(){
     private lateinit var apiManager: ApiManager
     private lateinit var heading: TextView
     private lateinit var types: TextView
@@ -28,6 +31,8 @@ class VaccineDetail : AppCompatActivity() {
     private lateinit var companyList : List<String>
     private lateinit var companyDataList: ArrayList<SetCompanyData>
     private lateinit var companyRecyclerView: RecyclerView
+    private lateinit var recyclerViewReadyListener: RecyclerViewReadyListener
+    private lateinit var detailOverlay:FrameLayout
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +47,8 @@ class VaccineDetail : AppCompatActivity() {
         dose = findViewById(R.id.dosecnt)
         company = findViewById(R.id.companynm)
         companyDataList = ArrayList()
+        detailOverlay = findViewById(R.id.detailOverlay)
+        detailOverlay.visibility = View.VISIBLE
 
         companyRecyclerView = findViewById(R.id.companyRecycler)
         companyRecyclerView.layoutManager = LinearLayoutManager(this)
@@ -82,6 +89,7 @@ class VaccineDetail : AppCompatActivity() {
 
     }
     private fun getCompanyData(companyName: String, vaccineName: String,userInfo:User) {
+        detailOverlay.visibility = View.VISIBLE
         val url = "https://covacmis.onrender.com/price/$companyName/$vaccineName"
         println(url)
 
@@ -99,6 +107,7 @@ class VaccineDetail : AppCompatActivity() {
                     println(companyDataList)
                     val myCompanyAdapter = CompanyAdapter(companyDataList,vaccineName,userInfo)
                     companyRecyclerView.adapter = myCompanyAdapter
+                    detailOverlay.visibility = View.GONE
                 }
             },
             { error ->
@@ -109,4 +118,10 @@ class VaccineDetail : AppCompatActivity() {
         queue.add(request)
     }
 
+    fun setRecyclerViewReadyListener(listener: RecyclerViewReadyListener) {
+        recyclerViewReadyListener = listener
+    }
+    private fun onRecyclerViewReady(){
+        recyclerViewReadyListener.onRecyclerViewReady()
+    }
 }
