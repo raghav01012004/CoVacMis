@@ -71,18 +71,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <ImageButton
-                android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical"
-                android:backgroundTint="#A6F2B8FF"
-                android:clickable="true"
-                android:contentDescription="tap to add dose"
-                android:focusable="true"
-                android:src="@drawable/ic_add"
-                tools:ignore="UnusedAttribute" />
-
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

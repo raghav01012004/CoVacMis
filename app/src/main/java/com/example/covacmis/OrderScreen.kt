@@ -49,7 +49,8 @@ class OrderScreen : AppCompatActivity() {
                     var vaccine:String
                     for(user in orderData.keys()){
                         userName = user.toString()
-                        vaccine = orderData[user].toString()
+                        val details = orderData.getJSONObject(user)
+                        vaccine = details["vaccine_name"].toString()
                         val order = Order(user,vaccine,key)
 //                        println(order)
                         orderList.add(order)
