@@ -48,6 +48,7 @@ class VaccineDetail : AppCompatActivity() {
         companyRecyclerView.setHasFixedSize(true)
 
         val clickedItem = intent.getParcelableExtra<DataClass>("clickedItem")
+        val userDetail = intent.getSerializableExtra("userDetail") as User
         apiManager = ApiManager(this)
 
         if (clickedItem != null) {
@@ -68,7 +69,7 @@ class VaccineDetail : AppCompatActivity() {
                         }
                         println(companyList)
                         for (i in companyList) {
-                            getCompanyData(i, clickedItem.dataVaccineName)
+                            getCompanyData(i, clickedItem.dataVaccineName,userDetail)
                         }
 
                     } else {
@@ -80,7 +81,7 @@ class VaccineDetail : AppCompatActivity() {
 
 
     }
-    private fun getCompanyData(companyName: String, vaccineName: String) {
+    private fun getCompanyData(companyName: String, vaccineName: String,userInfo:User) {
         val url = "https://covacmis.onrender.com/price/$companyName/$vaccineName"
         println(url)
 
@@ -96,7 +97,7 @@ class VaccineDetail : AppCompatActivity() {
                 // Check if all data has been collected before setting up the adapter
                 if (companyDataList.size == companyList.size) {
                     println(companyDataList)
-                    val myCompanyAdapter = CompanyAdapter(companyDataList)
+                    val myCompanyAdapter = CompanyAdapter(companyDataList,vaccineName,userInfo)
                     companyRecyclerView.adapter = myCompanyAdapter
                 }
             },

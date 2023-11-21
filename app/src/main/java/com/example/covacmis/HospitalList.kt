@@ -1,12 +1,11 @@
 package com.example.covacmis
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class hospitalList : AppCompatActivity() {
+class HospitalList : AppCompatActivity() {
 
 //    private lateinit var recyclerView: RecyclerView
 //    private lateinit var dataList: ArrayList<DataClass>
@@ -15,8 +14,8 @@ class hospitalList : AppCompatActivity() {
 //    private lateinit var overlayContainer: FrameLayout
 //
 //    private lateinit var userInfo:User
-    lateinit var myRecyclerView : RecyclerView
-    lateinit var hospitalArrayList: ArrayList<Hospital>
+    private lateinit var myRecyclerView : RecyclerView
+    private lateinit var hospitalArrayList: ArrayList<Hospital>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +24,7 @@ class hospitalList : AppCompatActivity() {
         supportActionBar?.hide()
         myRecyclerView = findViewById(R.id.recyclerView2)
 
-        val HospitalArray = arrayOf(
+        val hospitalArray = arrayOf(
             "Fortis",
             "Kailash",
             "AIIMS",
@@ -35,7 +34,7 @@ class hospitalList : AppCompatActivity() {
             "Evan"
         )
 
-        val HospitalCityArray = arrayOf(
+        val hospitalCityArray = arrayOf(
             "Noida",
             "GZB",
             "Rishikesh",
@@ -45,7 +44,7 @@ class hospitalList : AppCompatActivity() {
             "MZN"
         )
 
-        val HospitalDistanceArray = arrayOf(
+        val hospitalDistanceArray = arrayOf(
             "1",
             "16",
             "250",
@@ -65,12 +64,12 @@ class hospitalList : AppCompatActivity() {
         myRecyclerView.layoutManager = LinearLayoutManager(this)
         hospitalArrayList = arrayListOf<Hospital>()
 
-        for( index in HospitalArray.indices){
-            val hospital = Hospital(HospitalArray[index], HospitalCityArray[index], HospitalDistanceArray[index])
+        for( index in hospitalArray.indices){
+            val hospital = Hospital(hospitalArray[index], hospitalCityArray[index], hospitalDistanceArray[index])
             hospitalArrayList.add(hospital)
         }
 
-        var myAdapter = MyAdapter(hospitalArrayList, this)
+        val myAdapter = MyAdapter(hospitalArrayList, this)
         myRecyclerView.adapter = myAdapter
 
         myAdapter.setOnItemClickListener(object : MyAdapter.onItemClickListener {
