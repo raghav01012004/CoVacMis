@@ -20,7 +20,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".hospitalList"
+            android:name=".gMap"
+            android:configChanges="orientation"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HospitalList"
             android:exported="false" />
         <activity
             android:name=".OrderScreen"
@@ -47,9 +52,6 @@
             android:name=".VaccinationChart"
             android:exported="false" />
         <activity
-            android:name=".Choice"
-            android:exported="false" />
-        <activity
             android:name=".Login"
             android:exported="false" />
         <activity
@@ -68,6 +70,9 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAksnl5FjluGvTUJuJEm9q4isVElzjjLvI" />
     </application>
 
 </manifest>

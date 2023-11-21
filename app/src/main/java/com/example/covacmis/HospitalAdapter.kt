@@ -1,9 +1,11 @@
 package com.example.covacmis
 
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
@@ -47,10 +49,15 @@ class MyAdapter(var hospitalArrayList: ArrayList<Hospital>, var context : Activi
         val hTitle = itemView.findViewById<TextView>(R.id.textViewHospitalName)
         val hCity = itemView.findViewById<TextView>(R.id.textViewCity)
         val hDistance = itemView.findViewById<TextView>(R.id.textViewDistance)
+        val mapBtn = itemView.findViewById<ImageButton>(R.id.imageButton)
 
         init {
             itemView.setOnClickListener {
                 listener.onItemClicking(adapterPosition)
+            }
+            mapBtn.setOnClickListener{
+                val intent = Intent(itemView.context,gMap::class.java)
+                itemView.context.startActivity(intent)
             }
         }
     }
