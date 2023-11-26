@@ -24,25 +24,20 @@ internal class gMap : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var myMap: GoogleMap
     private lateinit var currentLocation: Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private var latitude:Double = 0.0
+    private var longitude :Double = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_gmap)
 
+        latitude = intent.getDoubleExtra("latitude",0.0)
+        longitude = intent.getDoubleExtra("longitude",0.0)
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         fetchLocation()
 
     }
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
 
     private fun fetchLocation()
     {
@@ -74,7 +69,7 @@ internal class gMap : AppCompatActivity(), OnMapReadyCallback {
         myMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(currentLocation.latitude,currentLocation.longitude)
+        val sydney = LatLng(latitude,longitude)
         myMap.addMarker(MarkerOptions().position(sydney).title("Your Location"))
         myMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 

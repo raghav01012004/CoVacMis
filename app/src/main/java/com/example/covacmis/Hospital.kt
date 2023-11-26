@@ -4,6 +4,8 @@ data class Hospital(
     val fullname: String,
     val city: String,
     val distance: String,
+    val latitude:String,
+    val longitude:String
 //    val password: String,
 //    val mobile: String,
 //    val username: String,

@@ -19,7 +19,7 @@ import org.json.JSONArray
 import java.net.URL
 import java.net.URLEncoder
 
-class VaccineDetail : AppCompatActivity(){
+class VaccineDetail : AppCompatActivity(),LocationFetchListener{
     private lateinit var apiManager: ApiManager
     private lateinit var heading: TextView
     private lateinit var types: TextView
@@ -33,7 +33,6 @@ class VaccineDetail : AppCompatActivity(){
     private lateinit var companyRecyclerView: RecyclerView
     private lateinit var recyclerViewReadyListener: RecyclerViewReadyListener
     private lateinit var detailOverlay:FrameLayout
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +104,7 @@ class VaccineDetail : AppCompatActivity(){
                 // Check if all data has been collected before setting up the adapter
                 if (companyDataList.size == companyList.size) {
                     println(companyDataList)
-                    val myCompanyAdapter = CompanyAdapter(companyDataList,vaccineName,userInfo)
+                    val myCompanyAdapter = CompanyAdapter(companyDataList,vaccineName,userInfo,this)
                     companyRecyclerView.adapter = myCompanyAdapter
                     detailOverlay.visibility = View.GONE
                 }
@@ -123,5 +122,9 @@ class VaccineDetail : AppCompatActivity(){
     }
     private fun onRecyclerViewReady(){
         recyclerViewReadyListener.onRecyclerViewReady()
+    }
+
+    override fun onLocationFetchCompleted(latitude: String, longitude: String, address: String) {
+        Log.d("LocationDetails", "Latitude: $latitude, Longitude: $longitude, Address: $address")
     }
 }

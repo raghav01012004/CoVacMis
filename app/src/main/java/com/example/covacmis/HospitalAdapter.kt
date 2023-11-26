@@ -45,7 +45,7 @@ class MyAdapter(private var hospitalArrayList: ArrayList<Hospital>, var context 
     }
 
     // it holds the view so views are not created everytime, so memory can be saved
-    class MyViewHolder(itemView : View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView){
+    inner class MyViewHolder(itemView : View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView){
         val hTitle:TextView = itemView.findViewById(R.id.textViewHospitalName)
         val hCity:TextView = itemView.findViewById(R.id.textViewCity)
         val hDistance:TextView = itemView.findViewById(R.id.textViewDistance)
@@ -56,7 +56,13 @@ class MyAdapter(private var hospitalArrayList: ArrayList<Hospital>, var context 
                 listener.onItemClicking(adapterPosition)
             }
             mapBtn.setOnClickListener{
+                val position = adapterPosition
+                val clickedItem = hospitalArrayList[position]
+                val latitude = clickedItem.latitude.toDouble()
+                val longitude = clickedItem.longitude.toDouble()
                 val intent = Intent(itemView.context,gMap::class.java)
+                intent.putExtra("latitude",latitude)
+                intent.putExtra("longitude",longitude)
                 itemView.context.startActivity(intent)
             }
         }
