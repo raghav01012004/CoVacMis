@@ -139,15 +139,18 @@ class ParentSignUp : AppCompatActivity() {
                     "Please fill the above fields",
                     Toast.LENGTH_SHORT
                 ).show()
+                signUpFrameLayout.visibility = View.GONE
             }
             //check the length of mobile no. -->
             else if(mob.length != 10)
                 {
                     Toast.makeText(applicationContext, "Invalid Mobile no. !", Toast.LENGTH_SHORT).show()
+                    signUpFrameLayout.visibility = View.GONE
                 }
             else if(passw.length < 6)
             {
                 Toast.makeText(applicationContext, "Password should be at-least 6 characters", Toast.LENGTH_SHORT).show()
+                signUpFrameLayout.visibility = View.GONE
             }
             else {
 
