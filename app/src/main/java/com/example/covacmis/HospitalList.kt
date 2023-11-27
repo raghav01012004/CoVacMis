@@ -33,6 +33,7 @@ class HospitalList : AppCompatActivity(),MyAdapter.OnItemClickListener {
     private lateinit var orderButton: Button
     private var selectedHospital:String = ""
     private lateinit var listOverlay : FrameLayout
+    private var address:String =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,7 @@ class HospitalList : AppCompatActivity(),MyAdapter.OnItemClickListener {
         val date = intent.getStringExtra("selectedDate")
         val latitude = intent.getStringExtra("latitude")
         val longitude = intent.getStringExtra("longitude")
-        val address = intent.getStringExtra("address")
+        address = intent.getStringExtra("address").toString()
 
         orderVac = findViewById(R.id.orderVacName)
         orderBrand = findViewById(R.id.orderBrand)
@@ -114,11 +115,13 @@ class HospitalList : AppCompatActivity(),MyAdapter.OnItemClickListener {
                 for (det in response.keys()) {
                     val hosObj = response.getJSONObject(det)
                     val locArray = hosObj.getJSONArray("location")
-                    val address = hosObj["address"]
+                    val addr = hosObj["address"]
                     val hospitalName = hosObj["hospitalName"]
                     val createHospitalDetailObject =
-                        Hospital(det,hospitalName.toString(), address.toString(), "40",locArray[0].toString(),locArray[1].toString())
-                    hospitalArrayList.add(createHospitalDetailObject)
+                        Hospital(det,hospitalName.toString(), addr.toString(), "40",locArray[0].toString(),locArray[1].toString())
+                    if(address==addr.toString()){
+                        hospitalArrayList.add(createHospitalDetailObject)
+                    }
                 }
                 val myAdapter = MyAdapter(hospitalArrayList, this,listOverlay)
                 myRecyclerView.adapter = myAdapter
