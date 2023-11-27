@@ -106,7 +106,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView2"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="478dp"
         android:layout_marginTop="10dp"
         android:clickable="true"
