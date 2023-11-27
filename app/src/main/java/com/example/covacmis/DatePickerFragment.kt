@@ -40,7 +40,7 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
             if (selectedDate.isNotEmpty()) {
                 val brandName = arguments?.getString("brandName") ?: ""
                 val vaccine = arguments?.getString("vaccine") ?: ""
-                val username = arguments?.getString("username") ?: ""
+                val userdetail = requireArguments().getSerializable("userdetail") as User
                 val companyName = arguments?.getString("companyName") ?: ""
                 val latitude = arguments?.getString("latitude")?:""
                 val longitude = arguments?.getString("longitude")?:""
@@ -49,7 +49,7 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
                 val intent = Intent(requireContext(), HospitalList::class.java)
                 intent.putExtra("brandName", brandName)
                 intent.putExtra("vaccine", vaccine)
-                intent.putExtra("username", username)
+                intent.putExtra("userdetail", userdetail)
                 intent.putExtra("companyName", companyName)
                 intent.putExtra("selectedDate", selectedDate)
                 intent.putExtra("latitude",latitude)
@@ -71,6 +71,7 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(requireContext(), this, year, month, day)
+        datePickerDialog.datePicker.minDate = c.timeInMillis
         datePickerDialog.show()
     }
 

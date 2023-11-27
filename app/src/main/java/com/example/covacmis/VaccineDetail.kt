@@ -104,7 +104,7 @@ class VaccineDetail : AppCompatActivity(),LocationFetchListener{
                 // Check if all data has been collected before setting up the adapter
                 if (companyDataList.size == companyList.size) {
                     println(companyDataList)
-                    val myCompanyAdapter = CompanyAdapter(companyDataList,vaccineName,userInfo,this)
+                    val myCompanyAdapter = CompanyAdapter(companyDataList,vaccineName,userInfo,this,detailOverlay)
                     companyRecyclerView.adapter = myCompanyAdapter
                     detailOverlay.visibility = View.GONE
                 }
