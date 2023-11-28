@@ -5,37 +5,39 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
+import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.imageview.ShapeableImageView
 
-class MyAdapter(var hospitalArrayList: ArrayList<Hospital>, var context : Activity) :
+class MyAdapter(private var hospitalArrayList: ArrayList<Hospital>,private var listener:OnItemClickListener,private var listOverlay:FrameLayout) :
     RecyclerView.Adapter<MyAdapter.MyViewHolder>(){
 
-    private lateinit var myListener: onItemClickListener
+    private var selectedPosition = RecyclerView.NO_POSITION
 
-    interface onItemClickListener {
-        fun onItemClicking(position: Int)
-    }
-
-    fun setOnItemClickListener(listener : onItemClickListener){
-        myListener = listener
+    interface OnItemClickListener {
+//        fun onItemClicking(position: Int)
+        fun onHospitalSelected(hospitalName: String)
     }
 
     // to create new view instance
     // when layout manager fails to find a suitable view for each item
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAdapter.MyViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.hospital_layout, parent, false)
-        return MyViewHolder(itemView, myListener)
+        return MyViewHolder(itemView,listener)
     }
 
     // populate items with data
     override fun onBindViewHolder(holder: MyAdapter.MyViewHolder, position: Int) {
         val currentItem = hospitalArrayList[position]
+//        holder.radioButton.isChecked = currentItem.isSelected
+        holder.bind(currentItem)
         holder.hTitle.text = currentItem.fullname
         holder.hCity.text = currentItem.city
         holder.hDistance.text = currentItem.distance.toString()
+
     }
 
 
@@ -45,19 +47,48 @@ class MyAdapter(var hospitalArrayList: ArrayList<Hospital>, var context : Activi
     }
 
     // it holds the view so views are not created everytime, so memory can be saved
-    class MyViewHolder(itemView : View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView){
-        val hTitle = itemView.findViewById<TextView>(R.id.textViewHospitalName)
-        val hCity = itemView.findViewById<TextView>(R.id.textViewCity)
-        val hDistance = itemView.findViewById<TextView>(R.id.textViewDistance)
-        val mapBtn = itemView.findViewById<ImageButton>(R.id.imageButton)
+    inner class MyViewHolder(itemView : View, listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView){
+        val hTitle:TextView = itemView.findViewById(R.id.textViewHospitalName)
+        val hCity:TextView = itemView.findViewById(R.id.textViewCity)
+        val hDistance:TextView = itemView.findViewById(R.id.textViewDistance)
+        private val mapBtn:ImageButton = itemView.findViewById(R.id.imageButton)
+        val radioButton:RadioButton = itemView.findViewById(R.id.radioButton)
 
         init {
-            itemView.setOnClickListener {
-                listener.onItemClicking(adapterPosition)
-            }
             mapBtn.setOnClickListener{
+                val position = adapterPosition
+                val clickedItem = hospitalArrayList[position]
+                val latitude = clickedItem.latitude.toDouble()
+                val longitude = clickedItem.longitude.toDouble()
                 val intent = Intent(itemView.context,gMap::class.java)
+                intent.putExtra("latitude",latitude)
+                intent.putExtra("longitude",longitude)
                 itemView.context.startActivity(intent)
+            }
+
+            }
+        fun bind(hospital: Hospital) {
+            hTitle.text = hospital.fullname
+            hCity.text = hospital.city
+            hDistance.text = hospital.distance.toString()
+            radioButton.isChecked = hospital.isSelected
+
+            radioButton.setOnClickListener {
+                val currentPosition = adapterPosition
+                if (currentPosition != RecyclerView.NO_POSITION) {
+                    hospitalArrayList.forEachIndexed { index, hospital ->
+                        hospital.isSelected = index == currentPosition
+                    }
+                    updateUI()
+                    val clickedItem = hospitalArrayList[currentPosition]
+                    listener.onHospitalSelected(clickedItem.fullname)
+                }
+            }
+        }
+
+        private fun updateUI() {
+            for (i in hospitalArrayList.indices) {
+                notifyItemChanged(i)
             }
         }
     }

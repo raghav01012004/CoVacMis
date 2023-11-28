@@ -16,8 +16,10 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 
-class AdapterClass(private val dataList: ArrayList<DataClass>, private var userInfo: User,private val overlayContainer:FrameLayout) :
+class AdapterClass(private val dataList: ArrayList<DataClass>, private var userInfo: User,private val overlayContainer:FrameLayout,private val recyclerViewReadyListener: RecyclerViewReadyListener) :
     RecyclerView.Adapter<AdapterClass.ViewHolderClass>() {
+    private var isLoading = false
+    private var onLoadMoreListener: OnLoadMoreListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderClass {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
@@ -30,12 +32,25 @@ class AdapterClass(private val dataList: ArrayList<DataClass>, private var userI
 
     override fun onBindViewHolder(holder: ViewHolderClass, position: Int) {
         val currentItem = dataList[position]
-        holder.rvAge.text = currentItem.ageGroup
-        holder.rvVaccine.text = currentItem.dataVaccineName
-        holder.rvDoseCount.text = currentItem.doseCount
+//        holder.rvAge.text = currentItem.ageGroup
+//        holder.rvVaccine.text = currentItem.dataVaccineName
+//        holder.rvDoseCount.text = currentItem.doseCount
+        holder.bindData(currentItem)
+
+        if (position == dataList.size - 1 && !isLoading) {
+            onLoadMoreListener?.onLoadMore()
+            isLoading = true
+        }
 
     }
 
+    fun setOnLoadMoreListener(onLoadMoreListener: OnLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener
+    }
+
+    fun setLoaded() {
+        isLoading = false
+    }
 
     inner class ViewHolderClass(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val rvVaccine: TextView = itemView.findViewById(R.id.VaccineName)
@@ -122,5 +137,14 @@ class AdapterClass(private val dataList: ArrayList<DataClass>, private var userI
 
 //                requestQueue.add(request)
             }
+        fun bindData(data: DataClass) {
+            rvVaccine.text = data.dataVaccineName
+            rvAge.text = data.ageGroup
+            rvDoseCount.text = data.doseCount
+        }
         }
     }
+
+interface OnLoadMoreListener {
+    fun onLoadMore()
+}

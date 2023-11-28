@@ -1,88 +1,142 @@
 package com.example.covacmis
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
-class HospitalList : AppCompatActivity() {
+class HospitalList : AppCompatActivity(),MyAdapter.OnItemClickListener {
 
-//    private lateinit var recyclerView: RecyclerView
+    //    private lateinit var recyclerView: RecyclerView
 //    private lateinit var dataList: ArrayList<DataClass>
 //    private lateinit var HospitalName: ArrayList<String>
 //    private lateinit var ageGroup: ArrayList<String>
 //    private lateinit var overlayContainer: FrameLayout
 //
 //    private lateinit var userInfo:User
-    private lateinit var myRecyclerView : RecyclerView
+    private lateinit var myRecyclerView: RecyclerView
     private lateinit var hospitalArrayList: ArrayList<Hospital>
+    private lateinit var orderVac: TextView
+    private lateinit var orderBrand: TextView
+    private lateinit var orderDate: TextView
+    private lateinit var orderButton: Button
+    private var selectedHospital:String = ""
+    private lateinit var listOverlay : FrameLayout
+    private var address:String =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_hospital)
+        val brandName = intent.getStringExtra("brandName")
+        val vaccine = intent.getStringExtra("vaccine")
+        val userdetail = intent.getSerializableExtra("userdetail") as User
+        val companyName = intent.getStringExtra("companyName")
+        val date = intent.getStringExtra("selectedDate")
+        val latitude = intent.getStringExtra("latitude")
+        val longitude = intent.getStringExtra("longitude")
+        address = intent.getStringExtra("address").toString()
+
+        orderVac = findViewById(R.id.orderVacName)
+        orderBrand = findViewById(R.id.orderBrand)
+        orderDate = findViewById(R.id.orderDate)
+        orderButton = findViewById(R.id.orderPlaceButton)
+        listOverlay = findViewById(R.id.ListOverlay)
+
+        orderVac.text = vaccine
+        orderBrand.text = brandName
+        orderDate.text = date
+
 
         supportActionBar?.hide()
         myRecyclerView = findViewById(R.id.recyclerView2)
 
-        val hospitalArray = arrayOf(
-            "Fortis",
-            "Kailash",
-            "AIIMS",
-            "SJM",
-            "MAX",
-            "Jaypee",
-            "Evan"
-        )
-
-        val hospitalCityArray = arrayOf(
-            "Noida",
-            "GZB",
-            "Rishikesh",
-            "GZB",
-            "Delhi",
-            "Greater Noida",
-            "MZN"
-        )
-
-        val hospitalDistanceArray = arrayOf(
-            "1",
-            "16",
-            "250",
-            "25",
-            "40",
-            "36",
-            "130"
-        )
-
-//        val newsContent = arrayOf(
-//            getString(R.string.news_content), getString(R.string.news_content),
-//            getString(R.string.news_content), getString(R.string.news_content),
-//            getString(R.string.news_content), getString(R.string.news_content)
-//        )
-
-        // to set hav bhav of items inside recyclerview, vertcially scrolling, horizontally, uniform grid
         myRecyclerView.layoutManager = LinearLayoutManager(this)
-        hospitalArrayList = arrayListOf<Hospital>()
+        myRecyclerView.setHasFixedSize(true)
+        hospitalArrayList = arrayListOf()
 
-        for( index in hospitalArray.indices){
-            val hospital = Hospital(hospitalArray[index], hospitalCityArray[index], hospitalDistanceArray[index])
-            hospitalArrayList.add(hospital)
-        }
+        getHospitalData()
 
-        val myAdapter = MyAdapter(hospitalArrayList, this)
-        myRecyclerView.adapter = myAdapter
-
-        myAdapter.setOnItemClickListener(object : MyAdapter.onItemClickListener {
-            override fun onItemClicking(position: Int) {
-                // on clicking each item , what action do you want to perform
-
-//                val intent = Intent(this@hospitalList, NewsDetailActivity::class.java)
-//                intent.putExtra("heading", newsArrayList[position].newsHeading)
-//                intent.putExtra("imageId", newsArrayList[position].newsImage)
-//                intent.putExtra("newscontent", newsArrayList[position].newsContent)
-//                startActivity(intent)
+        orderButton.setOnClickListener {
+            listOverlay.visibility = View.VISIBLE
+            orderButton.isEnabled = false
+            val url = "https://covacmis.onrender.com/user/order/"
+            val requestBody = JSONObject().apply {
+                put("username",userdetail.username)
+                put("vaccine_name",vaccine)
+                put("date",date)
+                put("hospital_name",selectedHospital)
+                put("brand_name",brandName)
+                put("company_name",companyName)
             }
+            val request = JsonObjectRequest(
+                Request.Method.POST, url, requestBody,
+                { response ->
+                    if(response["success"]==0){
+                        Toast.makeText(this,"${response["message"]}. Check your orders",Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        Toast.makeText(this,"${response["message"]}",Toast.LENGTH_SHORT).show()
+                    }
+                    listOverlay.visibility = View.GONE
+                    orderButton.isEnabled = true
+                    val intent = Intent(this,VaccinationChart::class.java)
+                    intent.putExtra("user",userdetail)
+                    startActivity(intent)
+                },
+                { error ->
+                    Log.d("HospitalList", error.toString())
+                    listOverlay.visibility = View.GONE
+                }
+            )
+            val queue = Volley.newRequestQueue(this)
+            queue.add(request)
 
-        })
+        }
+    }
+
+    private fun getHospitalData() {
+        listOverlay.visibility = View.VISIBLE
+        val url = "https://covacmis.onrender.com/hospital/getData"
+        val request = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                println(response)
+                for (det in response.keys()) {
+                    val hosObj = response.getJSONObject(det)
+                    val locArray = hosObj.getJSONArray("location")
+                    val addr = hosObj["address"]
+                    val hospitalName = hosObj["hospitalName"]
+                    val createHospitalDetailObject =
+                        Hospital(det,hospitalName.toString(), addr.toString(), "40",locArray[0].toString(),locArray[1].toString())
+                    if(address==addr.toString()){
+                        hospitalArrayList.add(createHospitalDetailObject)
+                    }
+                }
+                val myAdapter = MyAdapter(hospitalArrayList, this,listOverlay)
+                myRecyclerView.adapter = myAdapter
+                listOverlay.visibility = View.GONE
+            },
+            { error ->
+                Log.d("HospitalList", error.toString())
+                listOverlay.visibility = View.GONE
+            }
+        )
+        val queue = Volley.newRequestQueue(this)
+        queue.add(request)
+    }
+
+    override fun onHospitalSelected(hospitalName: String) {
+        selectedHospital = hospitalName
     }
 }

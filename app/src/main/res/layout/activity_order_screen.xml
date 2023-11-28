@@ -8,17 +8,50 @@
     android:background="@drawable/gradwp"
     tools:context=".OrderScreen">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/orderRecycler"
-        android:layout_marginVertical="15dp"
-        android:layout_marginHorizontal="15dp"
+    <FrameLayout
+        android:id="@+id/orderOverlay"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <ProgressBar
-        android:id="@+id/loadingProgressBar"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:layout_margin="15dp"
+        android:text="TODAY'S ORDERS:" />
+
+
+    <TextView
+        android:id="@+id/noOrdersTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:text="No orders for today. Have a great day doctor!!"
+        android:textColor="@color/black"
+        android:textSize="18sp"
         android:visibility="gone" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/orderRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginVertical="15dp"
+        android:visibility="visible" />
+
 
 </LinearLayout>
