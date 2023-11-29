@@ -20,6 +20,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ordersPlaced"
+            android:exported="false" />
+        <activity
+            android:name=".completed"
+            android:exported="false" />
+        <activity
             android:name=".gMap"
             android:configChanges="orientation"
             android:exported="false"
