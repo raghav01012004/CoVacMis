@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:icon="@drawable/baseline_format_list_bulleted_24"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/bottom_completed"
+        android:icon="@drawable/baseline_checklist_rtl_24"
+        android:title="Completed" />
+    <item
+        android:id="@+id/bottom_Placed"
+        android:icon="@drawable/baseline_shopping_cart_24"
+        android:title="Placed" />
+
+</menu>
