@@ -5,7 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradwp"
-    tools:context=".completed">
+    tools:context=".Completed">
+
+    <FrameLayout
+        android:id="@+id/completedOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
@@ -14,6 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/login_gradient"
         android:elevation="2dp"
         app:itemIconSize="30dp"
@@ -24,7 +39,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/comrecyclerView"
         app:layout_constraintVertical_bias="0.979"
         app:menu="@menu/bottom_menu" />
 
@@ -43,7 +58,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/comrecyclerView"
         android:layout_width="409dp"
         android:layout_height="600dp"
         android:layout_marginTop="26dp"

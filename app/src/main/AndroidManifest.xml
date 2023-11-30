@@ -23,7 +23,7 @@
             android:name=".ordersPlaced"
             android:exported="false" />
         <activity
-            android:name=".completed"
+            android:name=".Completed"
             android:exported="false" />
         <activity
             android:name=".gMap"

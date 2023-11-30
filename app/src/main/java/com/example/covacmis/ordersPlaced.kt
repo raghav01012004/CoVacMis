@@ -26,7 +26,7 @@ class ordersPlaced : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_completed -> {
-                    val intent = Intent(this, completed::class.java).putExtra("user",userInfo)
+                    val intent = Intent(this, Completed::class.java).putExtra("user",userInfo)
                     startActivity(intent)
                     true
                 }
