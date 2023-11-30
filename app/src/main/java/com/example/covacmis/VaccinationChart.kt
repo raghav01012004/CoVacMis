@@ -37,28 +37,6 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccination_chart)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNavigationView.selectedItemId = R.id.bottom_home
-
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-                menuItem ->
-            when (menuItem.itemId) {
-                R.id.bottom_home -> {
-                    true
-                }
-                R.id.bottom_completed -> {
-                    val intent = Intent(this, completed::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.bottom_Placed -> {
-                    val intent = Intent(this, ordersPlaced::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> false
-            }
-        }
 
         overlayContainer = findViewById(R.id.overlayContainer)
         overlayContainer.visibility = View.GONE
@@ -75,6 +53,29 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
 
         dataList = arrayListOf<DataClass>()
         getVaccines()
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigationView.selectedItemId = R.id.bottom_home
+
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+                menuItem ->
+            when (menuItem.itemId) {
+                R.id.bottom_home -> {
+                    true
+                }
+                R.id.bottom_completed -> {
+                    val intent = Intent(this, completed::class.java).putExtra("user",userInfo)
+                    startActivity(intent)
+                    true
+                }
+                R.id.bottom_Placed -> {
+                    val intent = Intent(this, ordersPlaced::class.java).putExtra("user",userInfo)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
 

@@ -6,9 +6,13 @@ import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class completed : AppCompatActivity() {
+
+    private lateinit var userInfo:User
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed)
+
+        userInfo = intent.getSerializableExtra("user") as User
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
         bottomNavigationView.selectedItemId = R.id.bottom_completed
@@ -17,7 +21,7 @@ class completed : AppCompatActivity() {
                 menuItem ->
             when (menuItem.itemId) {
                 R.id.bottom_home -> {
-                    val intent = Intent(this, VaccinationChart::class.java)
+                    val intent = Intent(this, VaccinationChart::class.java).putExtra("user",userInfo)
                     startActivity(intent)
                     true
                 }
@@ -25,7 +29,7 @@ class completed : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_Placed -> {
-                    val intent = Intent(this, ordersPlaced::class.java)
+                    val intent = Intent(this, ordersPlaced::class.java).putExtra("user",userInfo)
                     startActivity(intent)
                     true
                 }
