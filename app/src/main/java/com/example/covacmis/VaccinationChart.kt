@@ -6,20 +6,15 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.gson.Gson
-import org.json.JSONArray
 
 class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMoreListener{
 
@@ -37,28 +32,6 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_vaccination_chart)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNavigationView.selectedItemId = R.id.bottom_home
-
-        bottomNavigationView.setOnNavigationItemSelectedListener {
-                menuItem ->
-            when (menuItem.itemId) {
-                R.id.bottom_home -> {
-                    true
-                }
-                R.id.bottom_completed -> {
-                    val intent = Intent(this, completed::class.java)
-                    startActivity(intent)
-                    true
-                }
-                R.id.bottom_Placed -> {
-                    val intent = Intent(this, ordersPlaced::class.java)
-                    startActivity(intent)
-                    true
-                }
-                else -> false
-            }
-        }
 
         overlayContainer = findViewById(R.id.overlayContainer)
         overlayContainer.visibility = View.GONE
@@ -75,6 +48,29 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
 
         dataList = arrayListOf<DataClass>()
         getVaccines()
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
+        bottomNavigationView.selectedItemId = R.id.bottom_home
+
+        bottomNavigationView.setOnNavigationItemSelectedListener {
+                menuItem ->
+            when (menuItem.itemId) {
+                R.id.bottom_home -> {
+                    true
+                }
+                R.id.bottom_completed -> {
+                    val intent = Intent(this, Completed::class.java).putExtra("user",userInfo)
+                    startActivity(intent)
+                    true
+                }
+                R.id.bottom_Placed -> {
+                    val intent = Intent(this, OrdersPlaced::class.java).putExtra("user",userInfo)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
 
@@ -127,19 +123,10 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
     }
 
     override fun onLoadMore() {
-        // Implement the logic to load more data here
-        // Update the list and notify adapter when more data is loaded
-
-        // For example, fetch additional data and add it to dataList
-        // Then notify adapter and set loaded state
         fetchMoreData()
     }
 
     private fun fetchMoreData() {
-        // Implement logic to fetch more data
-        // For example, you can fetch the next page of data and add it to dataList
-
-        // After new data is loaded, update the adapter and mark loading as complete
         dataList.addAll(dataList)
         myAdapter.notifyDataSetChanged()
         myAdapter.setLoaded()

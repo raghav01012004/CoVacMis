@@ -8,7 +8,7 @@
     app:cardCornerRadius="20dp"
     app:cardBackgroundColor="#A6F2B8FF"
     android:layout_marginVertical="15dp"
-    app:cardElevation="5dp">
+    app:cardElevation="2dp">
 
 
         <LinearLayout
@@ -16,12 +16,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:background="#A6F2B8FF"
             android:layout_marginVertical="14dp"
             >
 
             <TextView
                 android:id="@+id/userName"
-                android:layout_width="wrap_content"
+                android:layout_width="90dp"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:text="username"
@@ -37,7 +39,8 @@
 
             <TextView
                 android:id="@+id/vaccineName"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
+                android:singleLine="true"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:textSize="17sp"
@@ -54,12 +57,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="17sp"
                 android:textColor="@color/black"
+                android:layout_marginEnd="20dp"
                 android:text="21-11-2003" />
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
 
             <ImageButton
                 android:id="@+id/removeButton"
@@ -72,6 +71,11 @@
                 android:src="@drawable/ic_minus"
                 android:contentDescription="removeButton"
                 android:focusable="true" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
 
         </LinearLayout>

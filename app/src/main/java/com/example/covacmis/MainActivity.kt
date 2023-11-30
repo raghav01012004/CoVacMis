@@ -92,11 +92,13 @@ class MainActivity : AppCompatActivity(),OrderScreen.RecyclerViewReadyCallback {
 //                    println(response[i])
 //                }
                 if (user?.fullname != null && user.fullname.isNotEmpty()) {
+                    mainOverlay.visibility = View.GONE
                     val intent = Intent(applicationContext, VaccinationChart::class.java).putExtra("user",user)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_SHORT)
                         .show()
+                    mainOverlay.visibility = View.GONE
                 }
                 button.isEnabled = true
             },
@@ -137,11 +139,13 @@ class MainActivity : AppCompatActivity(),OrderScreen.RecyclerViewReadyCallback {
 //                    println(response[i])
 //                }
                 if (hospital?.hospitalId != null && hospital.hospitalId.isNotEmpty()) {
+                    mainOverlay.visibility = View.GONE
                     val intent = Intent(applicationContext, OrderScreen::class.java).putExtra("hospitalDetail",hospital)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_SHORT)
                         .show()
+                    mainOverlay.visibility = View.GONE
                 }
                 mainOverlay.visibility = View.GONE
                 button.isEnabled = true
