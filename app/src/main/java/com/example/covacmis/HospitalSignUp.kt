@@ -6,14 +6,19 @@ import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.android.volley.NetworkError
+import com.android.volley.NoConnectionError
 import com.android.volley.Request
+import com.android.volley.TimeoutError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -32,6 +37,7 @@ class HospitalSignUp : AppCompatActivity() {
     private lateinit var latitude: String
     private lateinit var longitude: String
     private lateinit var address: String
+    private lateinit var signUpOverlay:FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +50,15 @@ class HospitalSignUp : AppCompatActivity() {
         val inputAddress= findViewById<EditText>(R.id.editTextText2)
         val pass = findViewById<EditText>(R.id.editTextText4)
         val mobile = findViewById<EditText>(R.id.editTextText3)
+        signUpOverlay = findViewById(R.id.hosSignUpOverlay)
         latitude="0.0"
         longitude="0.0"
         address="Surat"
 
 
         button.setOnClickListener {
-
+            signUpOverlay.visibility = View.VISIBLE
+            button.isEnabled = false
             val fullname = name.text?.toString()
             val addr = inputAddress.text?.toString()
             val passw = pass.text?.toString()
@@ -62,15 +70,21 @@ class HospitalSignUp : AppCompatActivity() {
                     "Please fill the above fields",
                     Toast.LENGTH_SHORT
                 ).show()
+                signUpOverlay.visibility = View.GONE
+                button.isEnabled = true
             }
             //check the length of mobile no. -->
             else if(mob.length != 10)
             {
                 Toast.makeText(applicationContext, "Invalid Mobile no. !", Toast.LENGTH_SHORT).show()
+                signUpOverlay.visibility = View.GONE
+                button.isEnabled = true
             }
             else if(passw.length < 6)
             {
                 Toast.makeText(applicationContext, "Password should be at-least 6 characters", Toast.LENGTH_SHORT).show()
+                signUpOverlay.visibility = View.GONE
+                button.isEnabled = true
             }
             else {
                 fetchLocation(object : LocationCallback {
@@ -87,7 +101,7 @@ class HospitalSignUp : AppCompatActivity() {
                             put("fullAddr", addr)
                         }
                         println(requestBody)
-                        val url = "https://saved-barely-redbird.ngrok-free.app/hospital/create"
+                        val url = "https://covacmis.onrender.com/hospital/create"
                         val request = JsonObjectRequest(
                             Request.Method.POST, url, requestBody,
                             { response ->
@@ -97,16 +111,31 @@ class HospitalSignUp : AppCompatActivity() {
                                     val hospitalData = HospitalLogin(hospitalId,hospitalName)
                                     val intent = Intent(applicationContext,OrderScreen::class.java).putExtra("hospitalDetail",hospitalData)
                                     startActivity(intent)
+                                    signUpOverlay.visibility = View.GONE
                                 }
 
                                 else{
-                                    Toast.makeText(applicationContext,"Hospital already exits. Moving to Login",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(applicationContext,"Hospital already exists. Moving to Login",Toast.LENGTH_SHORT).show()
+                                    signUpOverlay.visibility = View.GONE
                                     startActivity(Intent(applicationContext,MainActivity::class.java))
                                 }
-                                // Add the code you want to execute after the location and request processing here
                             },
                             { error ->
-                                Log.d("HospitalSignUp", error.toString())
+                                if(error is TimeoutError){
+                                    signUpOverlay.visibility = View.GONE
+                                    button.isEnabled = true
+                                    Toast.makeText(applicationContext, "Login timed out. Please try again!", Toast.LENGTH_SHORT).show()
+                                }
+                                else if(error is NoConnectionError){
+                                    signUpOverlay.visibility = View.GONE
+                                    button.isEnabled = true
+                                    Toast.makeText(applicationContext, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
+                                }
+                                else if(error is NetworkError){
+                                    signUpOverlay.visibility = View.GONE
+                                    button.isEnabled = true
+                                    Toast.makeText(applicationContext, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
+                                }
                             }
                         )
                         val queue = Volley.newRequestQueue(this@HospitalSignUp)
