@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.NetworkError
 import com.android.volley.NoConnectionError
 import com.android.volley.Request
@@ -22,6 +23,7 @@ class Completed : AppCompatActivity() {
     private lateinit var completedList:ArrayList<CompletedVac>
     private lateinit var recyclerView: RecyclerView
     private lateinit var completedOverlay:FrameLayout
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_completed)
@@ -32,6 +34,14 @@ class Completed : AppCompatActivity() {
         recyclerView = findViewById(R.id.comrecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayoutCompleted)
+        swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout.setOnRefreshListener {
+            val intent = Intent(this,Completed::class.java)
+            intent.putExtra("user",userInfo)
+            startActivity(intent)
+            swipeRefreshLayout.isRefreshing = false
+        }
 
         completedOverlay.visibility = View.VISIBLE
 
@@ -63,6 +73,7 @@ class Completed : AppCompatActivity() {
     }
 
     private fun getCompletedList(username:String){
+        completedList.clear()
         completedOverlay.visibility - View.VISIBLE
         val url = "https://covacmis.onrender.com/user/comVaccines/$username"
 
