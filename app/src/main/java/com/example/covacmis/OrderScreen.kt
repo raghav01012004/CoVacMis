@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.core.widget.ContentLoadingProgressBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.NetworkError
 import com.android.volley.NoConnectionError
 import com.android.volley.Request
@@ -32,6 +33,7 @@ class OrderScreen : AppCompatActivity() {
     private lateinit var orderOverlay : FrameLayout
     private lateinit var noOrdersTextView: TextView
     private var doubleBackToExitPressedOnce = false
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_screen)
@@ -44,6 +46,15 @@ class OrderScreen : AppCompatActivity() {
 
         hospitalInfo = intent.getSerializableExtra("hospitalDetail") as HospitalLogin
         orderList = arrayListOf()
+        orderList.clear()
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout.setOnRefreshListener {
+            val intent = Intent(this,OrderScreen::class.java)
+            intent.putExtra("hospitalDetail",hospitalInfo)
+            startActivity(intent)
+            swipeRefreshLayout.isRefreshing = false
+        }
         getOrders(hospitalInfo.hospitalName)
     }
 

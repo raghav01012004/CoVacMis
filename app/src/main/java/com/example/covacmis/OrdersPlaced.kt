@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.NetworkError
 import com.android.volley.NoConnectionError
 import com.android.volley.Request
@@ -22,6 +23,7 @@ class OrdersPlaced : AppCompatActivity() {
     private lateinit var recyclerView:RecyclerView
     private lateinit var placedOverlay:FrameLayout
     private lateinit var placedOrderList:ArrayList<PlacedOrder>
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_orders_placed)
@@ -32,6 +34,14 @@ class OrdersPlaced : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView3)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayoutPlaced)
+        swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout.setOnRefreshListener {
+            val intent = Intent(this,OrdersPlaced::class.java)
+            intent.putExtra("user",userInfo)
+            startActivity(intent)
+            swipeRefreshLayout.isRefreshing=false
+        }
 
         placedOrderList= arrayListOf()
 
@@ -63,6 +73,7 @@ class OrdersPlaced : AppCompatActivity() {
 
     private fun getPlacedOrderList(username:String){
         placedOverlay.visibility - View.VISIBLE
+        placedOrderList.clear()
         val url = "https://covacmis.onrender.com/user/orders/$username"
 
         val jsonRequest = JsonObjectRequest(

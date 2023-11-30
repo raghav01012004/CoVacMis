@@ -11,6 +11,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -24,6 +25,7 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
     private lateinit var ageGroup: ArrayList<String>
     private lateinit var overlayContainer: FrameLayout
     private lateinit var myAdapter: AdapterClass
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     private lateinit var userInfo:User
     private var doubleBackToExitPressedOnce = false
@@ -42,6 +44,14 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
 
         ageGroup = arrayListOf()
 
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayoutVaccine)
+        swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout.setOnRefreshListener {
+            val intent = Intent(this,VaccinationChart::class.java)
+            intent.putExtra("user",userInfo)
+            startActivity(intent)
+            swipeRefreshLayout.isRefreshing = false
+        }
         recyclerView = findViewById(R.id.recyclerview)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
@@ -93,7 +103,7 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
                     }
 
                     val userVaccineData = userInfo.vaccines[key]
-                    println(userVaccineData)
+//                    println(userVaccineData)
                     val userInfoDoseCount = if (userVaccineData is Map<*, *>) {
                         (userVaccineData["dose_count"] as Double)
                     } else {
