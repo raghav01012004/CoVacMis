@@ -20,7 +20,7 @@
         android:layout_gravity="center">
 
         <TextView
-            android:layout_width="104dp"
+            android:layout_width="95dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="20sp"

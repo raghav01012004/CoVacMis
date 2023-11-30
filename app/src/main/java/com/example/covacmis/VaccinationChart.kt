@@ -64,7 +64,7 @@ class VaccinationChart : AppCompatActivity() ,RecyclerViewReadyListener,OnLoadMo
                     true
                 }
                 R.id.bottom_Placed -> {
-                    val intent = Intent(this, ordersPlaced::class.java).putExtra("user",userInfo)
+                    val intent = Intent(this, OrdersPlaced::class.java).putExtra("user",userInfo)
                     startActivity(intent)
                     true
                 }

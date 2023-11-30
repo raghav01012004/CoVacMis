@@ -16,27 +16,27 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class Completed : AppCompatActivity() {
+class OrdersPlaced : AppCompatActivity() {
 
     private lateinit var userInfo:User
-    private lateinit var completedList:ArrayList<CompletedVac>
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var completedOverlay:FrameLayout
+    private lateinit var recyclerView:RecyclerView
+    private lateinit var placedOverlay:FrameLayout
+    private lateinit var placedOrderList:ArrayList<PlacedOrder>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_completed)
+        setContentView(R.layout.activity_orders_placed)
 
         userInfo = intent.getSerializableExtra("user") as User
-        completedList= arrayListOf()
-        completedOverlay = findViewById(R.id.completedOverlay)
-        recyclerView = findViewById(R.id.comrecyclerView)
+        placedOverlay = findViewById(R.id.placedOverlay)
+        placedOverlay.visibility = View.VISIBLE
+        recyclerView = findViewById(R.id.recyclerView3)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
 
-        completedOverlay.visibility = View.VISIBLE
+        placedOrderList= arrayListOf()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigation)
-        bottomNavigationView.selectedItemId = R.id.bottom_completed
+        bottomNavigationView.selectedItemId = R.id.bottom_Placed
 
         bottomNavigationView.setOnNavigationItemSelectedListener {
                 menuItem ->
@@ -47,57 +47,58 @@ class Completed : AppCompatActivity() {
                     true
                 }
                 R.id.bottom_completed -> {
+                    val intent = Intent(this, Completed::class.java).putExtra("user",userInfo)
+                    startActivity(intent)
                     true
                 }
                 R.id.bottom_Placed -> {
-                    val intent = Intent(this, OrdersPlaced::class.java).putExtra("user",userInfo)
-                    startActivity(intent)
                     true
                 }
                 else -> false
             }
         }
-
-        getCompletedList(userInfo.username)
+        getPlacedOrderList(userInfo.username)
 
     }
 
-    private fun getCompletedList(username:String){
-        completedOverlay.visibility - View.VISIBLE
-        val url = "https://covacmis.onrender.com/user/comVaccines/$username"
+    private fun getPlacedOrderList(username:String){
+        placedOverlay.visibility - View.VISIBLE
+        val url = "https://covacmis.onrender.com/user/orders/$username"
 
         val jsonRequest = JsonObjectRequest(
             Request.Method.GET,url,null,
             {
-                response->
-                    for(key in response.keys()){
-                        val keyObj = response.getJSONObject(key)
-                        val comDose = keyObj["dose_count"].toString()
-                        val comDate = keyObj["date_of_vaccination"].toString()
-                        val completedObj = CompletedVac(key,comDate,comDose)
-                        completedList.add(completedObj)
-                    }
-                if(completedList.isEmpty()){
+                    response->
+                val resObj = response.getJSONObject("orders")
+                for(key in resObj.keys()){
+                    val getOrderObj = resObj.getJSONObject(key)
+                    val hosName = getOrderObj["hospital_name"].toString()
+                    val ordDate = getOrderObj["date"].toString()
+                    val ordBrand = getOrderObj["brand_name"].toString()
+                    val orderObj = PlacedOrder(key,hosName,ordDate,ordBrand)
+                    placedOrderList.add(orderObj)
+                }
+                if(placedOrderList.isEmpty()){
 
                 }
                 else{
-                    val myAdapter = CompleteAdapter(completedList)
+                    val myAdapter = PlacedOrderAdapter(placedOrderList)
                     recyclerView.adapter = myAdapter
                 }
-                completedOverlay.visibility = View.GONE
+                placedOverlay.visibility = View.GONE
             },
             {
-                error->
+                    error->
                 if(error is TimeoutError){
-                    completedOverlay.visibility = View.GONE
+                    placedOverlay.visibility = View.GONE
                     Toast.makeText(this, "Login timed out. Please try again!", Toast.LENGTH_SHORT).show()
                 }
                 else if(error is NoConnectionError){
-                    completedOverlay.visibility = View.GONE
+                    placedOverlay.visibility = View.GONE
                     Toast.makeText(this, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
                 }
                 else if(error is NetworkError){
-                    completedOverlay.visibility = View.GONE
+                    placedOverlay.visibility = View.GONE
                     Toast.makeText(this, "No internet. Please check your internet connection", Toast.LENGTH_SHORT).show()
                 }
             }
