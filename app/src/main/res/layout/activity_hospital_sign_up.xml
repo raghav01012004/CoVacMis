@@ -7,6 +7,21 @@
     android:background="@drawable/gradwp"
     tools:context=".HospitalSignUp">
 
+    <FrameLayout
+        android:id="@+id/hosSignUpOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -66,7 +81,7 @@
             android:layout_marginTop="120dp"
             android:textColor="#AF32C4"
             android:textColorHint="#B276BD"
-            app:startIconDrawable="@drawable/baseline_person_24">
+            app:startIconDrawable="@drawable/baseline_location_on_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextText2"
@@ -125,7 +140,7 @@
                 android:ems="10"
                 android:hint="@string/password"
                 android:gravity="center"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:text=""
                 android:textColor="#AF32C4"
                 android:textColorHint="#B276BD"
