@@ -26,6 +26,7 @@ internal class gMap : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var latitude:Double = 0.0
     private var longitude :Double = 0.0
+    private var hospitalName:String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,6 +34,7 @@ internal class gMap : AppCompatActivity(), OnMapReadyCallback {
 
         latitude = intent.getDoubleExtra("latitude",0.0)
         longitude = intent.getDoubleExtra("longitude",0.0)
+        hospitalName = intent.getStringExtra("hospitalName").toString()
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         fetchLocation()
@@ -70,7 +72,7 @@ internal class gMap : AppCompatActivity(), OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(latitude,longitude)
-        myMap.addMarker(MarkerOptions().position(sydney).title("Your Location"))
+        myMap.addMarker(MarkerOptions().position(sydney).title(hospitalName))
         myMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
 
     }

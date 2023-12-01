@@ -60,9 +60,11 @@ class MyAdapter(private var hospitalArrayList: ArrayList<Hospital>,private var l
                 val clickedItem = hospitalArrayList[position]
                 val latitude = clickedItem.latitude.toDouble()
                 val longitude = clickedItem.longitude.toDouble()
+                val hosName = clickedItem.fullname
                 val intent = Intent(itemView.context,gMap::class.java)
                 intent.putExtra("latitude",latitude)
                 intent.putExtra("longitude",longitude)
+                intent.putExtra("hospitalName",hosName)
                 itemView.context.startActivity(intent)
             }
 
