@@ -47,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
-        android:layout_marginStart="10dp"
         android:background="@drawable/login_gradient"
         android:elevation="2dp"
         app:itemIconSize="30dp"
@@ -56,10 +55,10 @@
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerview"
-        app:layout_constraintVertical_bias="0.979"
+        app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/bottom_menu" />
 
     <TextView
